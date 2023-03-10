@@ -1,6 +1,5 @@
 package com.tactical.privacy.interfaces;
 
-//TO DO: FIX THESE IMPORTS
 import java.time.LocalDateTime;
 import org.immutables.value.Value;
 import com.tactical.privacy.models.StepStatus
