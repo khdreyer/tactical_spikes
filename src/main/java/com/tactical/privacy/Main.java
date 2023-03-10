@@ -8,7 +8,7 @@ public class Main {
     private static final Logger LOG = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        LOG.info("Hello world!");
+        LOG.info("Starting...!");
 
         var runner = new ServiceRunner();
         runner.start();
