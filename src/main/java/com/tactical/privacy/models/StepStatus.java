@@ -1,6 +1,6 @@
 package com.tactical.privacy.models;
 
-enum StepSatus {
+public enum StepStatus {
     SUCCESS,
     FAILURE
 }

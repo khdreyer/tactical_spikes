@@ -2,7 +2,7 @@ package com.tactical.privacy.interfaces;
 
 import java.time.LocalDateTime;
 import org.immutables.value.Value;
-import com.tactical.privacy.models.StepStatus
+import com.tactical.privacy.models.StepStatus;
 
 @Value.Immutable
 public interface StepResponse {
@@ -18,7 +18,7 @@ public interface StepResponse {
     String[] getMessages();
 
     interface Builder {
-        Builder stepStatus(StepStatus);
+        Builder stepStatus(StepStatus stepStatus);
 
         Builder timeStamp(LocalDateTime timeStamp);
 
