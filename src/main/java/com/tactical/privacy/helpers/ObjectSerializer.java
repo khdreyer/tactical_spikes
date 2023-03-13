@@ -16,4 +16,14 @@ public class ObjectSerializer {
             throw ex;
         }
     }
+
+    public String toString(Object obj) {
+        try {
+            var gson = new GsonBuilder().create();
+            return gson.toJson(obj);
+        } catch (Exception ex) {
+            LOG.error("Error serializing class!", ex);
+            throw ex;
+        }
+    }
 }

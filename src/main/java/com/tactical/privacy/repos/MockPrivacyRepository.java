@@ -1,6 +1,7 @@
-package com.tactical.privacy.repository;
+package com.tactical.privacy.repos;
 
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
+import com.tactical.privacy.interfaces.OrchestratorResponse;
 import com.tactical.privacy.stats.Logger;
 
 public class MockPrivacyRepository implements PrivacyRepository {
@@ -12,7 +13,7 @@ public class MockPrivacyRepository implements PrivacyRepository {
     }
 
     @Override
-    public void writeDeleteResult() {
+    public void writeDeleteResult(OrchestratorResponse result) {
         LOG.info("Writing delete result to run history table...");
     }
 }

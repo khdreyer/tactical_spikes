@@ -5,7 +5,7 @@ import com.tactical.privacy.PrivacyDeleteRequestEnricher;
 import com.tactical.privacy.helpers.ObjectSerializer;
 import com.tactical.privacy.interfaces.Orchestrator;
 import com.tactical.privacy.interfaces.Step;
-import com.tactical.privacy.repository.InMemoryPrivacyRequestRepository;
+import com.tactical.privacy.repos.InMemoryPrivacyRequestRepository;
 import com.tactical.privacy.steps.IdentityUserDeleteStep;
 import com.tactical.privacy.steps.SubscriberMainMySqlDeleteStep;
 import com.tactical.privacy.steps.ThirdPartyCustomerDeleteStep;

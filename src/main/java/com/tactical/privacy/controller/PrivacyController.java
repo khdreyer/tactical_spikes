@@ -4,7 +4,7 @@ import com.tactical.privacy.PrivacyDeleteRequestEnricher;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.Orchestrator;
 import com.tactical.privacy.models.PrivacyDeleteStepType;
-import com.tactical.privacy.repository.InMemoryPrivacyRequestRepository;
+import com.tactical.privacy.repos.InMemoryPrivacyRequestRepository;
 import com.tactical.privacy.stats.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

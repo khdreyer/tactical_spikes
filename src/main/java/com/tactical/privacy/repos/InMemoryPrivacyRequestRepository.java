@@ -1,4 +1,4 @@
-package com.tactical.privacy.repository;
+package com.tactical.privacy.repos;
 
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 
