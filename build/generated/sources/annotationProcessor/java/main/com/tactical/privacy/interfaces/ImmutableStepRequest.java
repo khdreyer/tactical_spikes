@@ -1,6 +1,7 @@
 package com.tactical.privacy.interfaces;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.primitives.Longs;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.Var;
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ import org.immutables.value.Generated;
 @Immutable
 @CheckReturnValue
 public final class ImmutableStepRequest implements StepRequest {
-  private final int companyId;
-  private final Identities identities;
+  private final long companyId;
+  private final UserIdentities identities;
 
-  private ImmutableStepRequest(int companyId, Identities identities) {
+  private ImmutableStepRequest(long companyId, UserIdentities identities) {
     this.companyId = companyId;
     this.identities = identities;
   }
@@ -38,7 +39,7 @@ public final class ImmutableStepRequest implements StepRequest {
    * @return The value of the {@code companyId} attribute
    */
   @Override
-  public int getCompanyId() {
+  public long getCompanyId() {
     return companyId;
   }
 
@@ -46,7 +47,7 @@ public final class ImmutableStepRequest implements StepRequest {
    * @return The value of the {@code identities} attribute
    */
   @Override
-  public Identities getIdentities() {
+  public UserIdentities getIdentities() {
     return identities;
   }
 
@@ -56,7 +57,7 @@ public final class ImmutableStepRequest implements StepRequest {
    * @param value A new value for companyId
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableStepRequest withCompanyId(int value) {
+  public final ImmutableStepRequest withCompanyId(long value) {
     if (this.companyId == value) return this;
     return new ImmutableStepRequest(value, this.identities);
   }
@@ -67,9 +68,9 @@ public final class ImmutableStepRequest implements StepRequest {
    * @param value A new value for identities
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableStepRequest withIdentities(Identities value) {
+  public final ImmutableStepRequest withIdentities(UserIdentities value) {
     if (this.identities == value) return this;
-    Identities newValue = Objects.requireNonNull(value, "identities");
+    UserIdentities newValue = Objects.requireNonNull(value, "identities");
     return new ImmutableStepRequest(this.companyId, newValue);
   }
 
@@ -96,7 +97,7 @@ public final class ImmutableStepRequest implements StepRequest {
   @Override
   public int hashCode() {
     @Var int h = 5381;
-    h += (h << 5) + companyId;
+    h += (h << 5) + Longs.hashCode(companyId);
     h += (h << 5) + identities.hashCode();
     return h;
   }
@@ -134,8 +135,8 @@ public final class ImmutableStepRequest implements StepRequest {
    * Creates a builder for {@link ImmutableStepRequest ImmutableStepRequest}.
    * <pre>
    * ImmutableStepRequest.builder()
-   *    .companyId(int) // required {@link StepRequest#getCompanyId() companyId}
-   *    .identities(com.tactical.privacy.interfaces.Identities) // required {@link StepRequest#getIdentities() identities}
+   *    .companyId(long) // required {@link StepRequest#getCompanyId() companyId}
+   *    .identities(com.tactical.privacy.interfaces.UserIdentities) // required {@link StepRequest#getIdentities() identities}
    *    .build();
    * </pre>
    * @return A new ImmutableStepRequest builder
@@ -158,8 +159,8 @@ public final class ImmutableStepRequest implements StepRequest {
     private static final long INIT_BIT_IDENTITIES = 0x2L;
     private long initBits = 0x3L;
 
-    private int companyId;
-    private @Nullable Identities identities;
+    private long companyId;
+    private @Nullable UserIdentities identities;
 
     private Builder() {
     }
@@ -185,7 +186,7 @@ public final class ImmutableStepRequest implements StepRequest {
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder companyId(int companyId) {
+    public final Builder companyId(long companyId) {
       this.companyId = companyId;
       initBits &= ~INIT_BIT_COMPANY_ID;
       return this;
@@ -197,7 +198,7 @@ public final class ImmutableStepRequest implements StepRequest {
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder identities(Identities identities) {
+    public final Builder identities(UserIdentities identities) {
       this.identities = Objects.requireNonNull(identities, "identities");
       initBits &= ~INIT_BIT_IDENTITIES;
       return this;

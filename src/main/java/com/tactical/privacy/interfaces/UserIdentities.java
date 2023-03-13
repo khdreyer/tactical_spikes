@@ -3,17 +3,17 @@ package com.tactical.privacy.interfaces;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface Identities {
+public interface UserIdentities {
 
     static Builder builder() {
-        return ImmutableIdentities.builder();
+        return ImmutableUserIdentities.builder();
     }
 
     String getPhone();
 
     String getEmail();
 
-    Long getSubscriberId();
+    long getSubscriberId();
 
     String getVisitorId();
 
@@ -22,10 +22,10 @@ public interface Identities {
 
         Builder email(String email);
 
-        Builder subscriberId(Long subscriberId);
+        Builder subscriberId(long subscriberId);
 
         Builder visitorId(String visitorId);
 
-        Identities build();
+        UserIdentities build();
     }
 }

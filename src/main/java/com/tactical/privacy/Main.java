@@ -21,6 +21,8 @@ public class Main {
                     .companyId(5)
                     .phone("555-555-5555")
                     .email("aawesome@gmail.com")
+                    .visitorId("SOMEFAKEVISITORID")
+                    .subscriberId(123456L)
                     .build();
 
             var response = orchestrator.process(sampleRequest);

@@ -1,9 +1,7 @@
 package com.tactical.privacy;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.gson.GsonBuilder;
-import com.tactical.privacy.interfaces.Identities;
+import com.tactical.privacy.helpers.ObjectSerializer;
+import com.tactical.privacy.interfaces.UserIdentities;
 import com.tactical.privacy.interfaces.Orchestrator;
 import com.tactical.privacy.interfaces.OrchestratorRequest;
 import com.tactical.privacy.interfaces.OrchestratorResponse;
@@ -19,9 +17,14 @@ public class PrivacyDeleteOrchestrator implements Orchestrator {
 
     private static final Logger LOG = Logger.getLogger(PrivacyDeleteOrchestrator.class);
     private final List<Step> orchestrationSteps;
+    private final ObjectSerializer serializer;
 
-    public PrivacyDeleteOrchestrator(List<Step> orchestrationSteps){
+    public PrivacyDeleteOrchestrator(
+        List<Step> orchestrationSteps,
+        ObjectSerializer serializer)
+    {
         this.orchestrationSteps = orchestrationSteps;
+        this.serializer = serializer;
     }
 
     @Override
@@ -48,8 +51,7 @@ public class PrivacyDeleteOrchestrator implements Orchestrator {
                 .build();
 
             LOG.info(processName + " ended.");
-
-            printResult(response);
+            LOG.info(serializer.toPrettyString(response));
 
             return response;
         } catch (Exception ex) {
@@ -58,32 +60,16 @@ public class PrivacyDeleteOrchestrator implements Orchestrator {
         }
     }
 
-    private void printResult(OrchestratorResponse result) {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            var prettyJson = mapper.writeValueAsString(result);
-            LOG.info(prettyJson);
-        } catch (Exception ex){
-            LOG.error("Error printing result.", ex);
-        }
-//        var gson = new GsonBuilder().setPrettyPrinting().create(); // pretty print
-//        String prettyJson = gson.toJson(result);
-//        LOG.info(prettyJson);
-    }
-
     private StepRequest map(OrchestratorRequest request) {
-
         var identities = getIdentities(request);
-
         return StepRequest.builder()
             .companyId(request.getCompanyId())
             .identities(identities)
             .build();
     }
 
-    private Identities getIdentities(OrchestratorRequest request) {
-        return Identities.builder()
+    private UserIdentities getIdentities(OrchestratorRequest request) {
+        return UserIdentities.builder()
             .email(request.getEmail())
             .phone(request.getPhone())
             .subscriberId(1111L)

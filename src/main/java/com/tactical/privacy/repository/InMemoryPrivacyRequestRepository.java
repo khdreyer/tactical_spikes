@@ -1,14 +1,14 @@
 package com.tactical.privacy.repository;
 
-import com.tactical.privacy.dto.PrivacyRequestDto;
+import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryPrivacyRequestRepository {
-    List<PrivacyRequestDto> privacyRequestDtoList = new ArrayList<>();
+    List<PrivacyDeleteRequestDto> privacyRequestDtoList = new ArrayList<>();
 
-    public void pushRequest(PrivacyRequestDto privacyRequestDto) {
-        privacyRequestDtoList.add(privacyRequestDto);
+    public void pushRequest(PrivacyDeleteRequestDto request) {
+        privacyRequestDtoList.add(request);
     }
 }

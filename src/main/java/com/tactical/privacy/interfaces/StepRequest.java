@@ -8,13 +8,13 @@ public interface StepRequest {
         return ImmutableStepRequest.builder();
     }
 
-    int getCompanyId();
+    long getCompanyId();
 
-    Identities getIdentities();
+    UserIdentities getIdentities();
 
     interface Builder {
-        Builder companyId(int companyId);
-        Builder identities(Identities identities);
+        Builder companyId(long companyId);
+        Builder identities(UserIdentities identities);
         StepRequest build();
     }
 }

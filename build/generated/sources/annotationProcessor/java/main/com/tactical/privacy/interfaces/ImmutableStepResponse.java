@@ -3,8 +3,8 @@ package com.tactical.privacy.interfaces;
 import com.google.common.base.MoreObjects;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.Var;
+import com.tactical.privacy.models.PrivacyDeleteStepType;
 import com.tactical.privacy.models.StepStatus;
-import com.tactical.privacy.models.StepType;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ import org.immutables.value.Generated;
 @Immutable
 @CheckReturnValue
 public final class ImmutableStepResponse implements StepResponse {
-  private final StepType stepType;
+  private final PrivacyDeleteStepType stepType;
   private final StepStatus stepStatus;
   private final LocalTime startedAt;
   private final LocalTime endedAt;
@@ -47,7 +47,7 @@ public final class ImmutableStepResponse implements StepResponse {
   }
 
   private ImmutableStepResponse(
-      StepType stepType,
+      PrivacyDeleteStepType stepType,
       StepStatus stepStatus,
       LocalTime startedAt,
       LocalTime endedAt,
@@ -63,7 +63,7 @@ public final class ImmutableStepResponse implements StepResponse {
    * @return The value of the {@code stepType} attribute
    */
   @Override
-  public StepType getStepType() {
+  public PrivacyDeleteStepType getStepType() {
     return stepType;
   }
 
@@ -105,8 +105,8 @@ public final class ImmutableStepResponse implements StepResponse {
    * @param value A new value for stepType
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableStepResponse withStepType(StepType value) {
-    StepType newValue = Objects.requireNonNull(value, "stepType");
+  public final ImmutableStepResponse withStepType(PrivacyDeleteStepType value) {
+    PrivacyDeleteStepType newValue = Objects.requireNonNull(value, "stepType");
     if (this.stepType == newValue) return this;
     return new ImmutableStepResponse(newValue, this.stepStatus, this.startedAt, this.endedAt, this.messages);
   }
@@ -228,7 +228,7 @@ public final class ImmutableStepResponse implements StepResponse {
    * Creates a builder for {@link ImmutableStepResponse ImmutableStepResponse}.
    * <pre>
    * ImmutableStepResponse.builder()
-   *    .stepType(com.tactical.privacy.models.StepType) // required {@link StepResponse#getStepType() stepType}
+   *    .stepType(com.tactical.privacy.models.PrivacyDeleteStepType) // required {@link StepResponse#getStepType() stepType}
    *    .stepStatus(com.tactical.privacy.models.StepStatus) // required {@link StepResponse#getStepStatus() stepStatus}
    *    .startedAt(java.time.LocalTime) // required {@link StepResponse#getStartedAt() startedAt}
    *    .endedAt(java.time.LocalTime) // required {@link StepResponse#getEndedAt() endedAt}
@@ -257,7 +257,7 @@ public final class ImmutableStepResponse implements StepResponse {
     private static final long INIT_BIT_ENDED_AT = 0x8L;
     private long initBits = 0xfL;
 
-    private @Nullable StepType stepType;
+    private @Nullable PrivacyDeleteStepType stepType;
     private @Nullable StepStatus stepStatus;
     private @Nullable LocalTime startedAt;
     private @Nullable LocalTime endedAt;
@@ -290,7 +290,7 @@ public final class ImmutableStepResponse implements StepResponse {
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder stepType(StepType stepType) {
+    public final Builder stepType(PrivacyDeleteStepType stepType) {
       this.stepType = Objects.requireNonNull(stepType, "stepType");
       initBits &= ~INIT_BIT_STEP_TYPE;
       return this;

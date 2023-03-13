@@ -1,7 +1,7 @@
 package com.tactical.privacy.interfaces;
 
+import com.tactical.privacy.models.PrivacyDeleteStepType;
 import com.tactical.privacy.models.StepStatus;
-import com.tactical.privacy.models.StepType;
 import java.time.LocalTime;
 import org.immutables.value.Value;
 
@@ -9,7 +9,7 @@ import org.immutables.value.Value;
 public interface StepResponse {
     static Builder builder() { return ImmutableStepResponse.builder(); }
 
-    StepType getStepType();
+    PrivacyDeleteStepType getStepType();
 
     StepStatus getStepStatus();
 
@@ -23,7 +23,7 @@ public interface StepResponse {
     }
 
     interface Builder {
-        Builder stepType(StepType type);
+        Builder stepType(PrivacyDeleteStepType type);
 
         Builder stepStatus(StepStatus status);
 

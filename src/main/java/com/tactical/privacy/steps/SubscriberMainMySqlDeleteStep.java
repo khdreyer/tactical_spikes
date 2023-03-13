@@ -3,8 +3,8 @@ package com.tactical.privacy.steps;
 import com.tactical.privacy.interfaces.Step;
 import com.tactical.privacy.interfaces.StepRequest;
 import com.tactical.privacy.interfaces.StepResponse;
+import com.tactical.privacy.models.PrivacyDeleteStepType;
 import com.tactical.privacy.models.StepStatus;
-import com.tactical.privacy.models.StepType;
 import com.tactical.privacy.stats.Logger;
 import java.time.LocalTime;
 
@@ -13,8 +13,8 @@ public class SubscriberMainMySqlDeleteStep implements Step {
     private static final Logger LOG = Logger.getLogger(SubscriberMainMySqlDeleteStep.class);
 
     @Override
-    public StepType getType() {
-        return StepType.SUBSCRIBER_MAIN_MYSQL_DELETE;
+    public PrivacyDeleteStepType getType() {
+        return PrivacyDeleteStepType.SUBSCRIBER_MAIN_MYSQL_DELETE;
     }
 
     @Override

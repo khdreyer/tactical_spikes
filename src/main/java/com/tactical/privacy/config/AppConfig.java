@@ -1,6 +1,8 @@
 package com.tactical.privacy.config;
 
 import com.tactical.privacy.PrivacyDeleteOrchestrator;
+import com.tactical.privacy.PrivacyDeleteRequestEnricher;
+import com.tactical.privacy.helpers.ObjectSerializer;
 import com.tactical.privacy.interfaces.Orchestrator;
 import com.tactical.privacy.interfaces.Step;
 import com.tactical.privacy.repository.InMemoryPrivacyRequestRepository;
@@ -43,7 +45,10 @@ public class AppConfig {
     @Bean
     @Scope(value = "prototype")
     public Orchestrator getOrchestrator() {
-        return new PrivacyDeleteOrchestrator(getOrchestratorSteps());
+        return new PrivacyDeleteOrchestrator(
+            getOrchestratorSteps(),
+            getSerializer()
+        );
     }
 
     public List<Step> getOrchestratorSteps() {
@@ -52,5 +57,16 @@ public class AppConfig {
         steps.add(getThirdPartyCustomerDeleteStep());
         steps.add(getIdentityUserDeleteStep());
         return steps;
+    }
+
+    @Bean
+    public ObjectSerializer getSerializer(){
+        return new ObjectSerializer();
+    }
+
+    @Bean
+    @Scope(value = "prototype")
+    public PrivacyDeleteRequestEnricher getPrivacyDeleteRequestBuilder(){
+        return new PrivacyDeleteRequestEnricher();
     }
 }

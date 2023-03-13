@@ -1,6 +1,7 @@
 package com.tactical.privacy.interfaces;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.primitives.Longs;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.google.errorprone.annotations.Var;
 import java.util.ArrayList;
@@ -14,28 +15,24 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.immutables.value.Generated;
 
 /**
- * Immutable implementation of {@link Identities}.
+ * Immutable implementation of {@link UserIdentities}.
  * <p>
  * Use the builder to create immutable instances:
- * {@code ImmutableIdentities.builder()}.
+ * {@code ImmutableUserIdentities.builder()}.
  */
-@Generated(from = "Identities", generator = "Immutables")
+@Generated(from = "UserIdentities", generator = "Immutables")
 @SuppressWarnings({"all"})
 @ParametersAreNonnullByDefault
 @javax.annotation.processing.Generated("org.immutables.processor.ProxyProcessor")
 @Immutable
 @CheckReturnValue
-public final class ImmutableIdentities implements Identities {
+public final class ImmutableUserIdentities implements UserIdentities {
   private final String phone;
   private final String email;
-  private final Long subscriberId;
+  private final long subscriberId;
   private final String visitorId;
 
-  private ImmutableIdentities(
-      String phone,
-      String email,
-      Long subscriberId,
-      String visitorId) {
+  private ImmutableUserIdentities(String phone, String email, long subscriberId, String visitorId) {
     this.phone = phone;
     this.email = email;
     this.subscriberId = subscriberId;
@@ -62,7 +59,7 @@ public final class ImmutableIdentities implements Identities {
    * @return The value of the {@code subscriberId} attribute
    */
   @Override
-  public Long getSubscriberId() {
+  public long getSubscriberId() {
     return subscriberId;
   }
 
@@ -75,68 +72,67 @@ public final class ImmutableIdentities implements Identities {
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link Identities#getPhone() phone} attribute.
+   * Copy the current immutable object by setting a value for the {@link UserIdentities#getPhone() phone} attribute.
    * An equals check used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for phone
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableIdentities withPhone(String value) {
+  public final ImmutableUserIdentities withPhone(String value) {
     String newValue = Objects.requireNonNull(value, "phone");
     if (this.phone.equals(newValue)) return this;
-    return new ImmutableIdentities(newValue, this.email, this.subscriberId, this.visitorId);
+    return new ImmutableUserIdentities(newValue, this.email, this.subscriberId, this.visitorId);
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link Identities#getEmail() email} attribute.
+   * Copy the current immutable object by setting a value for the {@link UserIdentities#getEmail() email} attribute.
    * An equals check used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for email
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableIdentities withEmail(String value) {
+  public final ImmutableUserIdentities withEmail(String value) {
     String newValue = Objects.requireNonNull(value, "email");
     if (this.email.equals(newValue)) return this;
-    return new ImmutableIdentities(this.phone, newValue, this.subscriberId, this.visitorId);
+    return new ImmutableUserIdentities(this.phone, newValue, this.subscriberId, this.visitorId);
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link Identities#getSubscriberId() subscriberId} attribute.
-   * An equals check used to prevent copying of the same value by returning {@code this}.
+   * Copy the current immutable object by setting a value for the {@link UserIdentities#getSubscriberId() subscriberId} attribute.
+   * A value equality check is used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for subscriberId
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableIdentities withSubscriberId(Long value) {
-    Long newValue = Objects.requireNonNull(value, "subscriberId");
-    if (this.subscriberId.equals(newValue)) return this;
-    return new ImmutableIdentities(this.phone, this.email, newValue, this.visitorId);
+  public final ImmutableUserIdentities withSubscriberId(long value) {
+    if (this.subscriberId == value) return this;
+    return new ImmutableUserIdentities(this.phone, this.email, value, this.visitorId);
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link Identities#getVisitorId() visitorId} attribute.
+   * Copy the current immutable object by setting a value for the {@link UserIdentities#getVisitorId() visitorId} attribute.
    * An equals check used to prevent copying of the same value by returning {@code this}.
    * @param value A new value for visitorId
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableIdentities withVisitorId(String value) {
+  public final ImmutableUserIdentities withVisitorId(String value) {
     String newValue = Objects.requireNonNull(value, "visitorId");
     if (this.visitorId.equals(newValue)) return this;
-    return new ImmutableIdentities(this.phone, this.email, this.subscriberId, newValue);
+    return new ImmutableUserIdentities(this.phone, this.email, this.subscriberId, newValue);
   }
 
   /**
-   * This instance is equal to all instances of {@code ImmutableIdentities} that have equal attribute values.
+   * This instance is equal to all instances of {@code ImmutableUserIdentities} that have equal attribute values.
    * @return {@code true} if {@code this} is equal to {@code another} instance
    */
   @Override
   public boolean equals(@Nullable Object another) {
     if (this == another) return true;
-    return another instanceof ImmutableIdentities
-        && equalTo(0, (ImmutableIdentities) another);
+    return another instanceof ImmutableUserIdentities
+        && equalTo(0, (ImmutableUserIdentities) another);
   }
 
-  private boolean equalTo(int synthetic, ImmutableIdentities another) {
+  private boolean equalTo(int synthetic, ImmutableUserIdentities another) {
     return phone.equals(another.phone)
         && email.equals(another.email)
-        && subscriberId.equals(another.subscriberId)
+        && subscriberId == another.subscriberId
         && visitorId.equals(another.visitorId);
   }
 
@@ -149,18 +145,18 @@ public final class ImmutableIdentities implements Identities {
     @Var int h = 5381;
     h += (h << 5) + phone.hashCode();
     h += (h << 5) + email.hashCode();
-    h += (h << 5) + subscriberId.hashCode();
+    h += (h << 5) + Longs.hashCode(subscriberId);
     h += (h << 5) + visitorId.hashCode();
     return h;
   }
 
   /**
-   * Prints the immutable value {@code Identities} with attribute values.
+   * Prints the immutable value {@code UserIdentities} with attribute values.
    * @return A string representation of the value
    */
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper("Identities")
+    return MoreObjects.toStringHelper("UserIdentities")
         .omitNullValues()
         .add("phone", phone)
         .add("email", email)
@@ -170,47 +166,47 @@ public final class ImmutableIdentities implements Identities {
   }
 
   /**
-   * Creates an immutable copy of a {@link Identities} value.
+   * Creates an immutable copy of a {@link UserIdentities} value.
    * Uses accessors to get values to initialize the new immutable instance.
    * If an instance is already immutable, it is returned as is.
    * @param instance The instance to copy
-   * @return A copied immutable Identities instance
+   * @return A copied immutable UserIdentities instance
    */
-  public static ImmutableIdentities copyOf(Identities instance) {
-    if (instance instanceof ImmutableIdentities) {
-      return (ImmutableIdentities) instance;
+  public static ImmutableUserIdentities copyOf(UserIdentities instance) {
+    if (instance instanceof ImmutableUserIdentities) {
+      return (ImmutableUserIdentities) instance;
     }
-    return ImmutableIdentities.builder()
+    return ImmutableUserIdentities.builder()
         .from(instance)
         .build();
   }
 
   /**
-   * Creates a builder for {@link ImmutableIdentities ImmutableIdentities}.
+   * Creates a builder for {@link ImmutableUserIdentities ImmutableUserIdentities}.
    * <pre>
-   * ImmutableIdentities.builder()
-   *    .phone(String) // required {@link Identities#getPhone() phone}
-   *    .email(String) // required {@link Identities#getEmail() email}
-   *    .subscriberId(Long) // required {@link Identities#getSubscriberId() subscriberId}
-   *    .visitorId(String) // required {@link Identities#getVisitorId() visitorId}
+   * ImmutableUserIdentities.builder()
+   *    .phone(String) // required {@link UserIdentities#getPhone() phone}
+   *    .email(String) // required {@link UserIdentities#getEmail() email}
+   *    .subscriberId(long) // required {@link UserIdentities#getSubscriberId() subscriberId}
+   *    .visitorId(String) // required {@link UserIdentities#getVisitorId() visitorId}
    *    .build();
    * </pre>
-   * @return A new ImmutableIdentities builder
+   * @return A new ImmutableUserIdentities builder
    */
-  public static ImmutableIdentities.Builder builder() {
-    return new ImmutableIdentities.Builder();
+  public static ImmutableUserIdentities.Builder builder() {
+    return new ImmutableUserIdentities.Builder();
   }
 
   /**
-   * Builds instances of type {@link ImmutableIdentities ImmutableIdentities}.
+   * Builds instances of type {@link ImmutableUserIdentities ImmutableUserIdentities}.
    * Initialize attributes and then invoke the {@link #build()} method to create an
    * immutable instance.
    * <p><em>{@code Builder} is not thread-safe and generally should not be stored in a field or collection,
    * but instead used immediately to create instances.</em>
    */
-  @Generated(from = "Identities", generator = "Immutables")
+  @Generated(from = "UserIdentities", generator = "Immutables")
   @NotThreadSafe
-  public static final class Builder implements Identities.Builder {
+  public static final class Builder implements UserIdentities.Builder {
     private static final long INIT_BIT_PHONE = 0x1L;
     private static final long INIT_BIT_EMAIL = 0x2L;
     private static final long INIT_BIT_SUBSCRIBER_ID = 0x4L;
@@ -219,21 +215,21 @@ public final class ImmutableIdentities implements Identities {
 
     private @Nullable String phone;
     private @Nullable String email;
-    private @Nullable Long subscriberId;
+    private long subscriberId;
     private @Nullable String visitorId;
 
     private Builder() {
     }
 
     /**
-     * Fill a builder with attribute values from the provided {@code Identities} instance.
+     * Fill a builder with attribute values from the provided {@code UserIdentities} instance.
      * Regular attribute values will be replaced with those from the given instance.
      * Absent optional values will not replace present values.
      * @param instance The instance from which to copy values
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder from(Identities instance) {
+    public final Builder from(UserIdentities instance) {
       Objects.requireNonNull(instance, "instance");
       phone(instance.getPhone());
       email(instance.getEmail());
@@ -243,7 +239,7 @@ public final class ImmutableIdentities implements Identities {
     }
 
     /**
-     * Initializes the value for the {@link Identities#getPhone() phone} attribute.
+     * Initializes the value for the {@link UserIdentities#getPhone() phone} attribute.
      * @param phone The value for phone 
      * @return {@code this} builder for use in a chained invocation
      */
@@ -255,7 +251,7 @@ public final class ImmutableIdentities implements Identities {
     }
 
     /**
-     * Initializes the value for the {@link Identities#getEmail() email} attribute.
+     * Initializes the value for the {@link UserIdentities#getEmail() email} attribute.
      * @param email The value for email 
      * @return {@code this} builder for use in a chained invocation
      */
@@ -267,19 +263,19 @@ public final class ImmutableIdentities implements Identities {
     }
 
     /**
-     * Initializes the value for the {@link Identities#getSubscriberId() subscriberId} attribute.
+     * Initializes the value for the {@link UserIdentities#getSubscriberId() subscriberId} attribute.
      * @param subscriberId The value for subscriberId 
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder subscriberId(Long subscriberId) {
-      this.subscriberId = Objects.requireNonNull(subscriberId, "subscriberId");
+    public final Builder subscriberId(long subscriberId) {
+      this.subscriberId = subscriberId;
       initBits &= ~INIT_BIT_SUBSCRIBER_ID;
       return this;
     }
 
     /**
-     * Initializes the value for the {@link Identities#getVisitorId() visitorId} attribute.
+     * Initializes the value for the {@link UserIdentities#getVisitorId() visitorId} attribute.
      * @param visitorId The value for visitorId 
      * @return {@code this} builder for use in a chained invocation
      */
@@ -291,15 +287,15 @@ public final class ImmutableIdentities implements Identities {
     }
 
     /**
-     * Builds a new {@link ImmutableIdentities ImmutableIdentities}.
-     * @return An immutable instance of Identities
+     * Builds a new {@link ImmutableUserIdentities ImmutableUserIdentities}.
+     * @return An immutable instance of UserIdentities
      * @throws java.lang.IllegalStateException if any required attributes are missing
      */
-    public ImmutableIdentities build() {
+    public ImmutableUserIdentities build() {
       if (initBits != 0) {
         throw new IllegalStateException(formatRequiredAttributesMessage());
       }
-      return new ImmutableIdentities(phone, email, subscriberId, visitorId);
+      return new ImmutableUserIdentities(phone, email, subscriberId, visitorId);
     }
 
     private String formatRequiredAttributesMessage() {
@@ -308,7 +304,7 @@ public final class ImmutableIdentities implements Identities {
       if ((initBits & INIT_BIT_EMAIL) != 0) attributes.add("email");
       if ((initBits & INIT_BIT_SUBSCRIBER_ID) != 0) attributes.add("subscriberId");
       if ((initBits & INIT_BIT_VISITOR_ID) != 0) attributes.add("visitorId");
-      return "Cannot build Identities, some of required attributes are not set " + attributes;
+      return "Cannot build UserIdentities, some of required attributes are not set " + attributes;
     }
   }
 }

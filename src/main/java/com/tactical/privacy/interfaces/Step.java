@@ -1,9 +1,9 @@
 package com.tactical.privacy.interfaces;
 
-import com.tactical.privacy.models.StepType;
+import com.tactical.privacy.models.PrivacyDeleteStepType;
 
 public interface Step {
-    StepType getType();
+    PrivacyDeleteStepType getType();
     StepResponse process(StepRequest stepRequest);
     void process();
 
