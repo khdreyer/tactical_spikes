@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-actuator-autoconfigure")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
 tasks.getByName<Test>("test") {

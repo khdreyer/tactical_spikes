@@ -36,4 +36,3 @@ public class SubscriberMainMySqlDeleteStep implements Step {
         return response;
     }
 }
-
