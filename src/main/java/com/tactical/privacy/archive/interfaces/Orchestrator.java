@@ -1,4 +1,4 @@
-package com.tactical.privacy.orchestrator.interfaces;
+package com.tactical.privacy.archive.interfaces;
 
 
 public interface Orchestrator<I, O> {

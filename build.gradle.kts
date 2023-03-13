@@ -20,6 +20,8 @@ dependencies {
     implementation("org.immutables:value:2.9.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-actuator-autoconfigure")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
 }
 
 tasks.getByName<Test>("test") {

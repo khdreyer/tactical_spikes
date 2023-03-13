@@ -8,21 +8,13 @@ public interface StepRequest {
         return ImmutableStepRequest.builder();
     }
 
-    String getPhone();
-
-    String getEmail();
-
     int getCompanyId();
 
+    Identities getIdentities();
+
     interface Builder {
-        Builder phone(String phone);
-
-        Builder email(String email);
-
         Builder companyId(int companyId);
-
+        Builder identities(Identities identities);
         StepRequest build();
-
     }
-
 }

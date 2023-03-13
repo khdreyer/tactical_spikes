@@ -1,26 +1,35 @@
 package com.tactical.privacy.interfaces;
 
-import java.time.LocalDateTime;
-import org.immutables.value.Value;
 import com.tactical.privacy.models.StepStatus;
+import com.tactical.privacy.models.StepType;
+import java.time.LocalTime;
+import org.immutables.value.Value;
 
 @Value.Immutable
 public interface StepResponse {
-    static Builder builder() {
-        return ImmutableStepResponse.builder();
-    }
+    static Builder builder() { return ImmutableStepResponse.builder(); }
 
-    //TO DO: create STEPSTATUS enum
+    StepType getStepType();
+
     StepStatus getStepStatus();
 
-    LocalDateTime getTimeStamp();
+    LocalTime getStartedAt();
 
-    String[] getMessages();
+    LocalTime getEndedAt();
+
+    @Value.Default
+    default String[] getMessages()  {
+        return new String[] {};
+    }
 
     interface Builder {
-        Builder stepStatus(StepStatus stepStatus);
+        Builder stepType(StepType type);
 
-        Builder timeStamp(LocalDateTime timeStamp);
+        Builder stepStatus(StepStatus status);
+
+        Builder startedAt(LocalTime started);
+
+        Builder endedAt(LocalTime ended);
 
         Builder messages(String[] messages);
 
