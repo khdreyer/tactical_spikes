@@ -1,8 +1,8 @@
 package com.tactical.privacy;
 
 import com.tactical.privacy.config.AppConfig;
+import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.Orchestrator;
-import com.tactical.privacy.interfaces.OrchestratorRequest;
 import com.tactical.privacy.stats.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -16,16 +16,18 @@ public class Main {
             var context = new AnnotationConfigApplicationContext(AppConfig.class);
             var orchestrator = context.getBean(Orchestrator.class);
 
-            var sampleRequest
-                = OrchestratorRequest.builder()
-                    .companyId(5)
-                    .phone("555-555-5555")
-                    .email("aawesome@gmail.com")
-                    .visitorId("SOMEFAKEVISITORID")
-                    .subscriberId(123456L)
-                    .build();
+            var endpointRequest = PrivacyDeleteRequestDto.builder()
+                .companyId(5)
+                .phone("555-555-5555")
+                .email("aawesome@gmail.com")
+                .build();
 
-            var response = orchestrator.process(sampleRequest);
+            var enricher = context.getBean(PrivacyDeleteRequestEnricher.class);
+            var orchestratorRequest = enricher.transform(endpointRequest);
+            var response = orchestrator.process(orchestratorRequest);
+
+            LOG.info("All done!");
+
         } catch (Exception ex){
             LOG.info("Something failed!");
             throw ex;

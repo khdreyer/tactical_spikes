@@ -6,7 +6,6 @@ import com.tactical.privacy.interfaces.OrchestratorRequest;
 import com.tactical.privacy.models.PrivacyDeleteStepType;
 import com.tactical.privacy.repository.InMemoryPrivacyRequestRepository;
 import com.tactical.privacy.stats.Logger;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

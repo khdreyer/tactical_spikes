@@ -8,16 +8,16 @@ public class PrivacyDeleteRequestEnricher {
 
     private static final Logger LOG = Logger.getLogger(PrivacyDeleteRequestEnricher.class);
 
-    public OrchestratorRequest build(PrivacyDeleteRequestDto request) {
+    public OrchestratorRequest transform(PrivacyDeleteRequestDto request) {
         try {
-            return enrichAndBuild(request.getCompanyId(), request.getPhone(), request.getEmail());
+            return enrichAndBuildRequest(request.getCompanyId(), request.getPhone(), request.getEmail());
         } catch (Exception ex) {
             LOG.error("Failed to get additional identities from the Identity service.", ex);
             throw ex;
         }
     }
 
-    private OrchestratorRequest enrichAndBuild(long companyId, String phone, String email) {
+    private OrchestratorRequest enrichAndBuildRequest(long companyId, String phone, String email) {
         // TODO: call identity and get the subscriber
         //  and visitor ids to enrich the request for the orchestrator.
 
