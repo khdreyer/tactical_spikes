@@ -11,13 +11,7 @@ public interface OrchestratorRequest {
 
     long getCompanyId();
 
-    String getPhone();
-
-    String getEmail();
-
-    long getSubscriberId();
-
-    String getVisitorId();
+    UserIdentities getUserIdentities();
 
     @Value.Default
     default PrivacyDeleteStepType[] getStepsToProcess()  {
@@ -26,14 +20,7 @@ public interface OrchestratorRequest {
 
     interface Builder {
         Builder companyId(long companyId);
-
-        Builder phone(String phone);
-
-        Builder email(String email);
-
-        Builder subscriberId(long subscriberId);
-
-        Builder visitorId(String visitorId);
+        Builder userIdentities(UserIdentities userIdentities);
 
         Builder stepsToProcess(PrivacyDeleteStepType[] steps);
 

@@ -1,8 +1,8 @@
 package com.tactical.privacy.controller;
 
+import com.tactical.privacy.PrivacyDeleteRequestEnricher;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.Orchestrator;
-import com.tactical.privacy.interfaces.OrchestratorRequest;
 import com.tactical.privacy.models.PrivacyDeleteStepType;
 import com.tactical.privacy.repository.InMemoryPrivacyRequestRepository;
 import com.tactical.privacy.stats.Logger;
@@ -21,12 +21,16 @@ public class PrivacyController {
     private final InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository;
     private final Orchestrator orchestrator;
 
+    private final PrivacyDeleteRequestEnricher enricher;
+
     @Autowired
     public PrivacyController(
         InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository,
+        PrivacyDeleteRequestEnricher enricher,
         Orchestrator orchestrator) {
         this.inMemoryPrivacyRequestRepository = inMemoryPrivacyRequestRepository;
         this.orchestrator = orchestrator;
+        this.enricher = enricher;
     }
 
     @PostMapping(value = "add-request")
@@ -38,12 +42,7 @@ public class PrivacyController {
             PrivacyDeleteStepType.SUBSCRIBER_EVENTS_DELETE
         };
 
-        OrchestratorRequest orchestratorRequest = OrchestratorRequest.builder()
-            .email(requestDto.getEmail())
-            .phone(requestDto.getPhone())
-            .companyId(requestDto.getCompanyId())
-            .stepsToProcess(stepsToProcess)
-            .build();
+        var orchestratorRequest = enricher.transform(requestDto);
 
         orchestrator.process(orchestratorRequest);
 

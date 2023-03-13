@@ -1,7 +1,6 @@
 package com.tactical.privacy;
 
 import com.tactical.privacy.helpers.ObjectSerializer;
-import com.tactical.privacy.interfaces.UserIdentities;
 import com.tactical.privacy.interfaces.Orchestrator;
 import com.tactical.privacy.interfaces.OrchestratorRequest;
 import com.tactical.privacy.interfaces.OrchestratorResponse;
@@ -61,19 +60,9 @@ public class PrivacyDeleteOrchestrator implements Orchestrator {
     }
 
     private StepRequest map(OrchestratorRequest request) {
-        var identities = getIdentities(request);
         return StepRequest.builder()
             .companyId(request.getCompanyId())
-            .identities(identities)
-            .build();
-    }
-
-    private UserIdentities getIdentities(OrchestratorRequest request) {
-        return UserIdentities.builder()
-            .email(request.getEmail())
-            .phone(request.getPhone())
-            .subscriberId(1111L)
-            .visitorId("VISITORID123")
+            .identities(request.getUserIdentities())
             .build();
     }
 }

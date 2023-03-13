@@ -30,18 +30,12 @@ import org.immutables.value.Generated;
 @CheckReturnValue
 public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
   private final long companyId;
-  private final String phone;
-  private final String email;
-  private final long subscriberId;
-  private final String visitorId;
+  private final UserIdentities userIdentities;
   private final PrivacyDeleteStepType[] stepsToProcess;
 
   private ImmutableOrchestratorRequest(ImmutableOrchestratorRequest.Builder builder) {
     this.companyId = builder.companyId;
-    this.phone = builder.phone;
-    this.email = builder.email;
-    this.subscriberId = builder.subscriberId;
-    this.visitorId = builder.visitorId;
+    this.userIdentities = builder.userIdentities;
     this.stepsToProcess = builder.stepsToProcess != null
         ? builder.stepsToProcess
         : OrchestratorRequest.super.getStepsToProcess().clone();
@@ -49,16 +43,10 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
 
   private ImmutableOrchestratorRequest(
       long companyId,
-      String phone,
-      String email,
-      long subscriberId,
-      String visitorId,
+      UserIdentities userIdentities,
       PrivacyDeleteStepType[] stepsToProcess) {
     this.companyId = companyId;
-    this.phone = phone;
-    this.email = email;
-    this.subscriberId = subscriberId;
-    this.visitorId = visitorId;
+    this.userIdentities = userIdentities;
     this.stepsToProcess = stepsToProcess;
   }
 
@@ -71,35 +59,11 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
   }
 
   /**
-   * @return The value of the {@code phone} attribute
+   * @return The value of the {@code userIdentities} attribute
    */
   @Override
-  public String getPhone() {
-    return phone;
-  }
-
-  /**
-   * @return The value of the {@code email} attribute
-   */
-  @Override
-  public String getEmail() {
-    return email;
-  }
-
-  /**
-   * @return The value of the {@code subscriberId} attribute
-   */
-  @Override
-  public long getSubscriberId() {
-    return subscriberId;
-  }
-
-  /**
-   * @return The value of the {@code visitorId} attribute
-   */
-  @Override
-  public String getVisitorId() {
-    return visitorId;
+  public UserIdentities getUserIdentities() {
+    return userIdentities;
   }
 
   /**
@@ -118,54 +82,19 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
    */
   public final ImmutableOrchestratorRequest withCompanyId(long value) {
     if (this.companyId == value) return this;
-    return new ImmutableOrchestratorRequest(value, this.phone, this.email, this.subscriberId, this.visitorId, this.stepsToProcess);
+    return new ImmutableOrchestratorRequest(value, this.userIdentities, this.stepsToProcess);
   }
 
   /**
-   * Copy the current immutable object by setting a value for the {@link OrchestratorRequest#getPhone() phone} attribute.
-   * An equals check used to prevent copying of the same value by returning {@code this}.
-   * @param value A new value for phone
+   * Copy the current immutable object by setting a value for the {@link OrchestratorRequest#getUserIdentities() userIdentities} attribute.
+   * A shallow reference equality check is used to prevent copying of the same value by returning {@code this}.
+   * @param value A new value for userIdentities
    * @return A modified copy of the {@code this} object
    */
-  public final ImmutableOrchestratorRequest withPhone(String value) {
-    String newValue = Objects.requireNonNull(value, "phone");
-    if (this.phone.equals(newValue)) return this;
-    return new ImmutableOrchestratorRequest(this.companyId, newValue, this.email, this.subscriberId, this.visitorId, this.stepsToProcess);
-  }
-
-  /**
-   * Copy the current immutable object by setting a value for the {@link OrchestratorRequest#getEmail() email} attribute.
-   * An equals check used to prevent copying of the same value by returning {@code this}.
-   * @param value A new value for email
-   * @return A modified copy of the {@code this} object
-   */
-  public final ImmutableOrchestratorRequest withEmail(String value) {
-    String newValue = Objects.requireNonNull(value, "email");
-    if (this.email.equals(newValue)) return this;
-    return new ImmutableOrchestratorRequest(this.companyId, this.phone, newValue, this.subscriberId, this.visitorId, this.stepsToProcess);
-  }
-
-  /**
-   * Copy the current immutable object by setting a value for the {@link OrchestratorRequest#getSubscriberId() subscriberId} attribute.
-   * A value equality check is used to prevent copying of the same value by returning {@code this}.
-   * @param value A new value for subscriberId
-   * @return A modified copy of the {@code this} object
-   */
-  public final ImmutableOrchestratorRequest withSubscriberId(long value) {
-    if (this.subscriberId == value) return this;
-    return new ImmutableOrchestratorRequest(this.companyId, this.phone, this.email, value, this.visitorId, this.stepsToProcess);
-  }
-
-  /**
-   * Copy the current immutable object by setting a value for the {@link OrchestratorRequest#getVisitorId() visitorId} attribute.
-   * An equals check used to prevent copying of the same value by returning {@code this}.
-   * @param value A new value for visitorId
-   * @return A modified copy of the {@code this} object
-   */
-  public final ImmutableOrchestratorRequest withVisitorId(String value) {
-    String newValue = Objects.requireNonNull(value, "visitorId");
-    if (this.visitorId.equals(newValue)) return this;
-    return new ImmutableOrchestratorRequest(this.companyId, this.phone, this.email, this.subscriberId, newValue, this.stepsToProcess);
+  public final ImmutableOrchestratorRequest withUserIdentities(UserIdentities value) {
+    if (this.userIdentities == value) return this;
+    UserIdentities newValue = Objects.requireNonNull(value, "userIdentities");
+    return new ImmutableOrchestratorRequest(this.companyId, newValue, this.stepsToProcess);
   }
 
   /**
@@ -176,7 +105,7 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
    */
   public final ImmutableOrchestratorRequest withStepsToProcess(PrivacyDeleteStepType... elements) {
     PrivacyDeleteStepType[] newValue = elements.clone();
-    return new ImmutableOrchestratorRequest(this.companyId, this.phone, this.email, this.subscriberId, this.visitorId, newValue);
+    return new ImmutableOrchestratorRequest(this.companyId, this.userIdentities, newValue);
   }
 
   /**
@@ -192,25 +121,19 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
 
   private boolean equalTo(int synthetic, ImmutableOrchestratorRequest another) {
     return companyId == another.companyId
-        && phone.equals(another.phone)
-        && email.equals(another.email)
-        && subscriberId == another.subscriberId
-        && visitorId.equals(another.visitorId)
+        && userIdentities.equals(another.userIdentities)
         && Arrays.equals(stepsToProcess, another.stepsToProcess);
   }
 
   /**
-   * Computes a hash code from attributes: {@code companyId}, {@code phone}, {@code email}, {@code subscriberId}, {@code visitorId}, {@code stepsToProcess}.
+   * Computes a hash code from attributes: {@code companyId}, {@code userIdentities}, {@code stepsToProcess}.
    * @return hashCode value
    */
   @Override
   public int hashCode() {
     @Var int h = 5381;
     h += (h << 5) + Longs.hashCode(companyId);
-    h += (h << 5) + phone.hashCode();
-    h += (h << 5) + email.hashCode();
-    h += (h << 5) + Longs.hashCode(subscriberId);
-    h += (h << 5) + visitorId.hashCode();
+    h += (h << 5) + userIdentities.hashCode();
     h += (h << 5) + Arrays.hashCode(stepsToProcess);
     return h;
   }
@@ -224,10 +147,7 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
     return MoreObjects.toStringHelper("OrchestratorRequest")
         .omitNullValues()
         .add("companyId", companyId)
-        .add("phone", phone)
-        .add("email", email)
-        .add("subscriberId", subscriberId)
-        .add("visitorId", visitorId)
+        .add("userIdentities", userIdentities)
         .add("stepsToProcess", Arrays.toString(stepsToProcess))
         .toString();
   }
@@ -253,10 +173,7 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
    * <pre>
    * ImmutableOrchestratorRequest.builder()
    *    .companyId(long) // required {@link OrchestratorRequest#getCompanyId() companyId}
-   *    .phone(String) // required {@link OrchestratorRequest#getPhone() phone}
-   *    .email(String) // required {@link OrchestratorRequest#getEmail() email}
-   *    .subscriberId(long) // required {@link OrchestratorRequest#getSubscriberId() subscriberId}
-   *    .visitorId(String) // required {@link OrchestratorRequest#getVisitorId() visitorId}
+   *    .userIdentities(com.tactical.privacy.interfaces.UserIdentities) // required {@link OrchestratorRequest#getUserIdentities() userIdentities}
    *    .stepsToProcess(com.tactical.privacy.models.PrivacyDeleteStepType) // optional {@link OrchestratorRequest#getStepsToProcess() stepsToProcess}
    *    .build();
    * </pre>
@@ -277,17 +194,11 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
   @NotThreadSafe
   public static final class Builder implements OrchestratorRequest.Builder {
     private static final long INIT_BIT_COMPANY_ID = 0x1L;
-    private static final long INIT_BIT_PHONE = 0x2L;
-    private static final long INIT_BIT_EMAIL = 0x4L;
-    private static final long INIT_BIT_SUBSCRIBER_ID = 0x8L;
-    private static final long INIT_BIT_VISITOR_ID = 0x10L;
-    private long initBits = 0x1fL;
+    private static final long INIT_BIT_USER_IDENTITIES = 0x2L;
+    private long initBits = 0x3L;
 
     private long companyId;
-    private @Nullable String phone;
-    private @Nullable String email;
-    private long subscriberId;
-    private @Nullable String visitorId;
+    private @Nullable UserIdentities userIdentities;
     private @Nullable PrivacyDeleteStepType[] stepsToProcess;
 
     private Builder() {
@@ -304,10 +215,7 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
     public final Builder from(OrchestratorRequest instance) {
       Objects.requireNonNull(instance, "instance");
       companyId(instance.getCompanyId());
-      phone(instance.getPhone());
-      email(instance.getEmail());
-      subscriberId(instance.getSubscriberId());
-      visitorId(instance.getVisitorId());
+      userIdentities(instance.getUserIdentities());
       stepsToProcess(instance.getStepsToProcess());
       return this;
     }
@@ -325,50 +233,14 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
     }
 
     /**
-     * Initializes the value for the {@link OrchestratorRequest#getPhone() phone} attribute.
-     * @param phone The value for phone 
+     * Initializes the value for the {@link OrchestratorRequest#getUserIdentities() userIdentities} attribute.
+     * @param userIdentities The value for userIdentities 
      * @return {@code this} builder for use in a chained invocation
      */
     @CanIgnoreReturnValue 
-    public final Builder phone(String phone) {
-      this.phone = Objects.requireNonNull(phone, "phone");
-      initBits &= ~INIT_BIT_PHONE;
-      return this;
-    }
-
-    /**
-     * Initializes the value for the {@link OrchestratorRequest#getEmail() email} attribute.
-     * @param email The value for email 
-     * @return {@code this} builder for use in a chained invocation
-     */
-    @CanIgnoreReturnValue 
-    public final Builder email(String email) {
-      this.email = Objects.requireNonNull(email, "email");
-      initBits &= ~INIT_BIT_EMAIL;
-      return this;
-    }
-
-    /**
-     * Initializes the value for the {@link OrchestratorRequest#getSubscriberId() subscriberId} attribute.
-     * @param subscriberId The value for subscriberId 
-     * @return {@code this} builder for use in a chained invocation
-     */
-    @CanIgnoreReturnValue 
-    public final Builder subscriberId(long subscriberId) {
-      this.subscriberId = subscriberId;
-      initBits &= ~INIT_BIT_SUBSCRIBER_ID;
-      return this;
-    }
-
-    /**
-     * Initializes the value for the {@link OrchestratorRequest#getVisitorId() visitorId} attribute.
-     * @param visitorId The value for visitorId 
-     * @return {@code this} builder for use in a chained invocation
-     */
-    @CanIgnoreReturnValue 
-    public final Builder visitorId(String visitorId) {
-      this.visitorId = Objects.requireNonNull(visitorId, "visitorId");
-      initBits &= ~INIT_BIT_VISITOR_ID;
+    public final Builder userIdentities(UserIdentities userIdentities) {
+      this.userIdentities = Objects.requireNonNull(userIdentities, "userIdentities");
+      initBits &= ~INIT_BIT_USER_IDENTITIES;
       return this;
     }
 
@@ -399,10 +271,7 @@ public final class ImmutableOrchestratorRequest implements OrchestratorRequest {
     private String formatRequiredAttributesMessage() {
       List<String> attributes = new ArrayList<>();
       if ((initBits & INIT_BIT_COMPANY_ID) != 0) attributes.add("companyId");
-      if ((initBits & INIT_BIT_PHONE) != 0) attributes.add("phone");
-      if ((initBits & INIT_BIT_EMAIL) != 0) attributes.add("email");
-      if ((initBits & INIT_BIT_SUBSCRIBER_ID) != 0) attributes.add("subscriberId");
-      if ((initBits & INIT_BIT_VISITOR_ID) != 0) attributes.add("visitorId");
+      if ((initBits & INIT_BIT_USER_IDENTITIES) != 0) attributes.add("userIdentities");
       return "Cannot build OrchestratorRequest, some of required attributes are not set " + attributes;
     }
   }

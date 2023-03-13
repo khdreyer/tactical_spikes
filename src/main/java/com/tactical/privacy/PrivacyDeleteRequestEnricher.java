@@ -2,6 +2,7 @@ package com.tactical.privacy;
 
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.OrchestratorRequest;
+import com.tactical.privacy.interfaces.UserIdentities;
 import com.tactical.privacy.stats.Logger;
 
 public class PrivacyDeleteRequestEnricher {
@@ -24,12 +25,16 @@ public class PrivacyDeleteRequestEnricher {
         var fakeSubId = 12345667L;
         var fakeVisitorId = "VSASDSIASSD_ASDS";
 
-        return OrchestratorRequest.builder()
+        var userIdentities = UserIdentities.builder()
             .email(email)
             .phone(phone)
-            .companyId(companyId)
             .visitorId(fakeVisitorId)
             .subscriberId(fakeSubId)
+            .build();
+
+        return OrchestratorRequest.builder()
+            .userIdentities(userIdentities)
+            .companyId(companyId)
             .build();
     }
 }
