@@ -9,13 +9,14 @@ import com.tactical.privacy.stats.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/privacy/")
+@RequestMapping(value = "/privacy")
 public class PrivacyController {
     private static final Logger LOG = Logger.getLogger(PrivacyController.class);
     private final InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository;
@@ -32,7 +33,12 @@ public class PrivacyController {
         this.enricher = enricher;
     }
 
-    @PostMapping(value = "add-request")
+    @GetMapping("/")
+    public String test(){
+        return "Working!";
+    }
+
+    @PostMapping(value = "/add-request")
     public ResponseEntity addPrivacyRequest(@RequestBody PrivacyDeleteRequestDto requestDto) {
         LOG.info(String.format("Received privacy request: %s", requestDto.toString()));
         inMemoryPrivacyRequestRepository.pushRequest(requestDto);
