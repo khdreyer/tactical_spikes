@@ -1,11 +1,11 @@
 package com.tactical.privacy.config;
 
-import com.tactical.privacy.PrivacyDeleteOrchestrator;
-import com.tactical.privacy.PrivacyDeleteRequestEnricher;
+import com.tactical.privacy.DeleteOrchestrator;
+import com.tactical.privacy.DeleteRequestEnricher;
 import com.tactical.privacy.helpers.ObjectSerializer;
-import com.tactical.privacy.interfaces.Orchestrator;
-import com.tactical.privacy.interfaces.Step;
-import com.tactical.privacy.repos.InMemoryPrivacyRequestRepository;
+import com.tactical.privacy.interfaces.DeleteStep;
+import com.tactical.privacy.repos.MockPrivacyRepository;
+import com.tactical.privacy.repos.PrivacyRepository;
 import com.tactical.privacy.steps.IdentityUserDeleteStep;
 import com.tactical.privacy.steps.SubscriberMainMySqlDeleteStep;
 import com.tactical.privacy.steps.ThirdPartyCustomerDeleteStep;
@@ -20,39 +20,33 @@ public class AppConfig {
 
     @Bean
     @Scope(value = "prototype")
-    public InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository() {
-        return new InMemoryPrivacyRequestRepository();
-    }
-
-    @Bean
-    @Scope(value = "prototype")
-    public Step getSubscriberMainMySqlDeleteStep() {
+    public DeleteStep getSubscriberMainMySqlDeleteStep() {
         return new SubscriberMainMySqlDeleteStep();
     }
 
     @Bean
     @Scope(value = "prototype")
-    public Step getThirdPartyCustomerDeleteStep() {
+    public DeleteStep getThirdPartyCustomerDeleteStep() {
         return new ThirdPartyCustomerDeleteStep();
     }
 
     @Bean
     @Scope(value = "prototype")
-    public Step getIdentityUserDeleteStep() {
+    public DeleteStep getIdentityUserDeleteStep() {
         return new IdentityUserDeleteStep();
     }
 
     @Bean
     @Scope(value = "prototype")
-    public Orchestrator getOrchestrator() {
-        return new PrivacyDeleteOrchestrator(
+    public DeleteOrchestrator getDeleteOrchestrator() {
+        return new DeleteOrchestrator(
             getOrchestratorSteps(),
             getSerializer()
         );
     }
 
-    public List<Step> getOrchestratorSteps() {
-        var steps = new ArrayList<Step>();
+    public List<DeleteStep> getOrchestratorSteps() {
+        var steps = new ArrayList<DeleteStep>();
         steps.add(getSubscriberMainMySqlDeleteStep());
         steps.add(getThirdPartyCustomerDeleteStep());
         steps.add(getIdentityUserDeleteStep());
@@ -66,7 +60,12 @@ public class AppConfig {
 
     @Bean
     @Scope(value = "prototype")
-    public PrivacyDeleteRequestEnricher getPrivacyDeleteRequestBuilder(){
-        return new PrivacyDeleteRequestEnricher();
+    public DeleteRequestEnricher getPrivacyDeleteRequestBuilder(){
+        return new DeleteRequestEnricher();
+    }
+
+    @Bean
+    public PrivacyRepository getPrivacyRepo() {
+        return new MockPrivacyRepository();
     }
 }

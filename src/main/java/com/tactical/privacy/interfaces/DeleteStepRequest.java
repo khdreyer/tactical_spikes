@@ -3,9 +3,9 @@ package com.tactical.privacy.interfaces;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface StepRequest {
+public interface DeleteStepRequest {
     static Builder builder() {
-        return ImmutableStepRequest.builder();
+        return ImmutableDeleteStepRequest.builder();
     }
 
     long getCompanyId();
@@ -15,6 +15,6 @@ public interface StepRequest {
     interface Builder {
         Builder companyId(long companyId);
         Builder identities(UserIdentities identities);
-        StepRequest build();
+        DeleteStepRequest build();
     }
 }

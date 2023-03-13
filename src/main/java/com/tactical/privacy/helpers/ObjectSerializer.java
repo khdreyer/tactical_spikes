@@ -1,5 +1,6 @@
 package com.tactical.privacy.helpers;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tactical.privacy.stats.Logger;
 
@@ -9,7 +10,7 @@ public class ObjectSerializer {
 
     public String toPrettyString(Object obj) {
         try {
-            var gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             return gson.toJson(obj);
         } catch (Exception ex) {
             LOG.error("Error serializing class!", ex);
@@ -19,7 +20,7 @@ public class ObjectSerializer {
 
     public String toString(Object obj) {
         try {
-            var gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().create();
             return gson.toJson(obj);
         } catch (Exception ex) {
             LOG.error("Error serializing class!", ex);

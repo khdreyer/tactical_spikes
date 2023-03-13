@@ -1,12 +1,12 @@
 package com.tactical.privacy.interfaces;
 
-import com.tactical.privacy.models.PrivacyDeleteStepType;
+import com.tactical.privacy.models.DeleteStepType;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface OrchestratorRequest {
+public interface DeleteOrchestratorRequest {
     static Builder builder() {
-        return ImmutableOrchestratorRequest.builder();
+        return ImmutableDeleteOrchestratorRequest.builder();
     }
 
     long getCompanyId();
@@ -14,16 +14,17 @@ public interface OrchestratorRequest {
     UserIdentities getUserIdentities();
 
     @Value.Default
-    default PrivacyDeleteStepType[] getStepsToProcess()  {
-        return new PrivacyDeleteStepType[] {};
+    default DeleteStepType[] getStepsToProcess()  {
+        return new DeleteStepType[] {};
     }
 
     interface Builder {
         Builder companyId(long companyId);
+
         Builder userIdentities(UserIdentities userIdentities);
 
-        Builder stepsToProcess(PrivacyDeleteStepType[] steps);
+        Builder stepsToProcess(DeleteStepType[] steps);
 
-        OrchestratorRequest build();
+        DeleteOrchestratorRequest build();
     }
 }

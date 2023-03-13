@@ -1,15 +1,15 @@
 package com.tactical.privacy;
 
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
-import com.tactical.privacy.interfaces.OrchestratorRequest;
+import com.tactical.privacy.interfaces.DeleteOrchestratorRequest;
 import com.tactical.privacy.interfaces.UserIdentities;
 import com.tactical.privacy.stats.Logger;
 
-public class PrivacyDeleteRequestEnricher {
+public class DeleteRequestEnricher {
 
-    private static final Logger LOG = Logger.getLogger(PrivacyDeleteRequestEnricher.class);
+    private static final Logger LOG = Logger.getLogger(DeleteRequestEnricher.class);
 
-    public OrchestratorRequest transform(PrivacyDeleteRequestDto request) {
+    public DeleteOrchestratorRequest transform(PrivacyDeleteRequestDto request) {
         try {
             return enrichAndBuildRequest(request.getCompanyId(), request.getPhone(), request.getEmail());
         } catch (Exception ex) {
@@ -18,21 +18,21 @@ public class PrivacyDeleteRequestEnricher {
         }
     }
 
-    private OrchestratorRequest enrichAndBuildRequest(long companyId, String phone, String email) {
+    private DeleteOrchestratorRequest enrichAndBuildRequest(long companyId, String phone, String email) {
         // TODO: call identity and get the subscriber
         //  and visitor ids to enrich the request for the orchestrator.
 
-        var fakeSubId = 12345667L;
-        var fakeVisitorId = "VSASDSIASSD_ASDS";
+        long fakeSubId = 12345667L;
+        String fakeVisitorId = "VSASDSIASSD_ASDS";
 
-        var userIdentities = UserIdentities.builder()
+        UserIdentities userIdentities = UserIdentities.builder()
             .email(email)
             .phone(phone)
             .visitorId(fakeVisitorId)
             .subscriberId(fakeSubId)
             .build();
 
-        return OrchestratorRequest.builder()
+        return DeleteOrchestratorRequest.builder()
             .userIdentities(userIdentities)
             .companyId(companyId)
             .build();

@@ -4,25 +4,27 @@ import java.time.LocalDateTime;
 import org.immutables.value.Value;
 
 @Value.Immutable
-public interface OrchestratorResponse {
+public interface DeleteOrchestratorResponse {
     static Builder builder() {
-        return ImmutableOrchestratorResponse.builder();
+        return ImmutableDeleteOrchestratorResponse.builder();
     }
 
+    long getCompanyId();
     LocalDateTime getStartedAt();
 
     LocalDateTime getEndedAt();
 
-    StepResponse[] getStepResults();
+    DeleteStepResponse[] getStepResults();
 
     interface Builder {
 
+        Builder companyId(long companyId);
         Builder startedAt(LocalDateTime start);
 
         Builder endedAt(LocalDateTime end);
 
-        Builder stepResults(StepResponse[] stepResponses);
+        Builder stepResults(DeleteStepResponse[] deleteStepRespons);
 
-        OrchestratorResponse build();
+        DeleteOrchestratorResponse build();
     }
 }

@@ -1,6 +1,6 @@
 package com.tactical.privacy.models;
 
-public enum PrivacyDeleteStepType {
+public enum DeleteStepType {
     IDENTITY_USER_DELETE,
     THIRD_PARTY_CUSTOMERS_DELETE,
     SUBSCRIBER_MAIN_MYSQL_DELETE,

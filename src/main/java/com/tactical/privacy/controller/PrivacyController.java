@@ -1,10 +1,10 @@
 package com.tactical.privacy.controller;
 
-import com.tactical.privacy.PrivacyDeleteRequestEnricher;
+import com.tactical.privacy.DeleteOrchestrator;
+import com.tactical.privacy.DeleteRequestEnricher;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
-import com.tactical.privacy.interfaces.Orchestrator;
-import com.tactical.privacy.models.PrivacyDeleteStepType;
-import com.tactical.privacy.repos.InMemoryPrivacyRequestRepository;
+import com.tactical.privacy.interfaces.DeleteOrchestratorRequest;
+import com.tactical.privacy.repos.PrivacyRepository;
 import com.tactical.privacy.stats.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/privacy")
 public class PrivacyController {
     private static final Logger LOG = Logger.getLogger(PrivacyController.class);
-    private final InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository;
-    private final Orchestrator orchestrator;
-    private final PrivacyDeleteRequestEnricher enricher;
+    private final DeleteOrchestrator deleteOrchestrator;
+    private final DeleteRequestEnricher requestEnricher;
+    private final PrivacyRepository privacyRepository;
 
     @Autowired
     public PrivacyController(
-        InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository,
-        PrivacyDeleteRequestEnricher enricher,
-        Orchestrator orchestrator) {
-        this.inMemoryPrivacyRequestRepository = inMemoryPrivacyRequestRepository;
-        this.orchestrator = orchestrator;
-        this.enricher = enricher;
+        DeleteRequestEnricher requestEnricher,
+        DeleteOrchestrator deleteOrchestrator,
+        PrivacyRepository privacyRepository)
+    {
+        this.requestEnricher = requestEnricher;
+        this.deleteOrchestrator = deleteOrchestrator;
+        this.privacyRepository = privacyRepository;
     }
 
     @GetMapping("/")
@@ -41,16 +42,19 @@ public class PrivacyController {
     @PostMapping(value = "/add-request")
     public ResponseEntity addPrivacyRequest(@RequestBody PrivacyDeleteRequestDto requestDto) {
         LOG.info(String.format("Received privacy request: %s", requestDto.toString()));
-        inMemoryPrivacyRequestRepository.pushRequest(requestDto);
+        privacyRepository.writeDeleteRequest(requestDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
-        PrivacyDeleteStepType[] stepsToProcess = new PrivacyDeleteStepType[]{
-            PrivacyDeleteStepType.SUBSCRIBER_EVENTS_DELETE
-        };
+    @PostMapping(value = "/process-request")
+    public ResponseEntity processPrivacyRequest(@RequestBody PrivacyDeleteRequestDto requestDto) {
 
-        var orchestratorRequest = enricher.transform(requestDto);
+//        DeleteStepType[] stepsToProcess = new DeleteStepType[]{
+//            DeleteStepType.SUBSCRIBER_EVENTS_DELETE
+//        };
 
-        orchestrator.process(orchestratorRequest);
-
+        DeleteOrchestratorRequest orchestratorRequest = requestEnricher.transform(requestDto);
+        deleteOrchestrator.process(orchestratorRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
