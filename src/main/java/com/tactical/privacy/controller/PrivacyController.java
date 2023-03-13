@@ -20,7 +20,6 @@ public class PrivacyController {
     private static final Logger LOG = Logger.getLogger(PrivacyController.class);
     private final InMemoryPrivacyRequestRepository inMemoryPrivacyRequestRepository;
     private final Orchestrator orchestrator;
-
     private final PrivacyDeleteRequestEnricher enricher;
 
     @Autowired

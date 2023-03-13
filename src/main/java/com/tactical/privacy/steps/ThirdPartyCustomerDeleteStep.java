@@ -35,10 +35,4 @@ public class ThirdPartyCustomerDeleteStep implements Step {
 
         return response;
     }
-
-    @Override
-    public void process() {
-        var stepName = this.getClass().getSimpleName();
-        LOG.info("Processed  -> " + stepName);
-    }
 }
