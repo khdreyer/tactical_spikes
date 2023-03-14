@@ -14,7 +14,7 @@ public interface DeleteOrchestratorRequest {
     UserIdentities getUserIdentities();
 
     @Value.Default
-    default DeleteStepType[] getStepsToProcess()  {
+    default DeleteStepType[] getStepFilter()  {
         return new DeleteStepType[] {};
     }
 
@@ -23,7 +23,7 @@ public interface DeleteOrchestratorRequest {
 
         Builder userIdentities(UserIdentities userIdentities);
 
-        Builder stepsToProcess(DeleteStepType[] steps);
+        Builder stepFilter(DeleteStepType[] steps);
 
         DeleteOrchestratorRequest build();
     }

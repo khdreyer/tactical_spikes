@@ -8,7 +8,7 @@ import com.tactical.privacy.interfaces.DeleteStepRequest;
 import com.tactical.privacy.interfaces.DeleteStepResponse;
 import com.tactical.privacy.models.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
-import com.tactical.privacy.steps.DeleteStepValidator;
+import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 public class DeleteOrchestrator {
 
     private static final Logger LOG = Logger.getLogger(DeleteOrchestrator.class);
-    private final List<DeleteStep> deleteSteps;
+    private final DeleteStep[] deleteSteps;
     private final DeleteStepValidator stepValidator;
     private final ObjectSerializer serializer;
 
     public DeleteOrchestrator(
-        List<DeleteStep> orchestrationSteps,
+        DeleteStep[] orchestrationSteps,
         DeleteStepValidator stepValidator,
         ObjectSerializer serializer)
     {
@@ -41,7 +41,7 @@ public class DeleteOrchestrator {
             LOG.info(processName + " started.");
             DeleteStepRequest stepRequest = map(request);
 
-            stepValidator.throwIfInvalid(deleteSteps);
+            stepValidator.throwIfInvalid(deleteSteps, request.getStepFilter());
 
             for (DeleteStep step : deleteSteps)
             {

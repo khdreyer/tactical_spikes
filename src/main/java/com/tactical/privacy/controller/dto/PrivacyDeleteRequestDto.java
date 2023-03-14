@@ -18,6 +18,10 @@ public interface PrivacyDeleteRequestDto {
 
     String getEmail();
 
+    @Value.Default
+    default String[] getStepsFilter()  {
+        return new String[] {};
+    }
 
     interface Builder {
         Builder companyId(long companyId);
@@ -25,6 +29,8 @@ public interface PrivacyDeleteRequestDto {
         Builder phone(String phone);
 
         Builder email(String email);
+
+        Builder stepsFilter(String[] stepsFilter);
 
         PrivacyDeleteRequestDto build();
     }

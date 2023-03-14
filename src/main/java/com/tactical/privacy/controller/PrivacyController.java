@@ -1,7 +1,7 @@
 package com.tactical.privacy.controller;
 
 import com.tactical.privacy.DeleteOrchestrator;
-import com.tactical.privacy.DeleteRequestEnricher;
+import com.tactical.privacy.DeleteRequestTransformer;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.DeleteOrchestratorRequest;
 import com.tactical.privacy.repos.PrivacyRepository;
@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class PrivacyController {
     private static final Logger LOG = Logger.getLogger(PrivacyController.class);
     private final DeleteOrchestrator deleteOrchestrator;
-    private final DeleteRequestEnricher requestEnricher;
+    private final DeleteRequestTransformer requestTransformer;
     private final PrivacyRepository privacyRepository;
 
     @Autowired
     public PrivacyController(
-        DeleteRequestEnricher requestEnricher,
+        DeleteRequestTransformer requestTransformer,
         DeleteOrchestrator deleteOrchestrator,
         PrivacyRepository privacyRepository)
     {
-        this.requestEnricher = requestEnricher;
+        this.requestTransformer = requestTransformer;
         this.deleteOrchestrator = deleteOrchestrator;
         this.privacyRepository = privacyRepository;
     }
@@ -55,7 +55,7 @@ public class PrivacyController {
 //        };
 
         try {
-            DeleteOrchestratorRequest orchestratorRequest = requestEnricher.transform(requestDto);
+            DeleteOrchestratorRequest orchestratorRequest = requestTransformer.transform(requestDto);
             deleteOrchestrator.process(orchestratorRequest);
         } catch (Exception ex) {
             LOG.error("An error occurred while processing a privacy delete request.", ex);

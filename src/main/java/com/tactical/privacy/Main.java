@@ -23,7 +23,7 @@ public class Main {
                 .email("aawesome@gmail.com")
                 .build();
 
-            DeleteRequestEnricher enricher = context.getBean(DeleteRequestEnricher.class);
+            DeleteRequestTransformer enricher = context.getBean(DeleteRequestTransformer.class);
             DeleteOrchestratorRequest orchestratorRequest = enricher.transform(endpointRequest);
             DeleteOrchestratorResponse response = orchestrator.process(orchestratorRequest);
 
