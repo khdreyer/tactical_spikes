@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/privacy")
+@RequestMapping(value = "/v2/privacy")
 public class PrivacyController {
     private static final Logger LOG = Logger.getLogger(PrivacyController.class);
     private final DeleteOrchestrator deleteOrchestrator;
