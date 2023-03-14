@@ -14,7 +14,7 @@ public class ThirdPartyCustomerDeleteStep implements DeleteStep {
 
     @Override
     public DeleteStepType getType() {
-        return DeleteStepType.THIRD_PARTY_CUSTOMERS_DELETE;
+        return DeleteStepType.THIRD_PARTY_CUSTOMERS;
     }
 
     @Override

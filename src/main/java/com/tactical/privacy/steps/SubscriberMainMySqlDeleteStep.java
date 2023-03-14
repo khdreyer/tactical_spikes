@@ -14,7 +14,7 @@ public class SubscriberMainMySqlDeleteStep implements DeleteStep {
 
     @Override
     public DeleteStepType getType() {
-        return DeleteStepType.SUBSCRIBER_MAIN_MYSQL_DELETE;
+        return DeleteStepType.SUBSCRIBER_MAIN_MYSQL;
     }
 
     @Override

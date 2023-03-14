@@ -6,6 +6,7 @@ import com.tactical.privacy.helpers.ObjectSerializer;
 import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.repos.MockPrivacyRepository;
 import com.tactical.privacy.repos.PrivacyRepository;
+import com.tactical.privacy.steps.DeleteStepValidator;
 import com.tactical.privacy.steps.IdentityUserDeleteStep;
 import com.tactical.privacy.steps.SubscriberMainMySqlDeleteStep;
 import com.tactical.privacy.steps.ThirdPartyCustomerDeleteStep;
@@ -41,6 +42,7 @@ public class AppConfig {
     public DeleteOrchestrator getDeleteOrchestrator() {
         return new DeleteOrchestrator(
             getOrchestratorSteps(),
+            getDeleteStepValidator(),
             getSerializer()
         );
     }
@@ -68,4 +70,10 @@ public class AppConfig {
     public PrivacyRepository getPrivacyRepo() {
         return new MockPrivacyRepository();
     }
+
+    @Bean
+    public DeleteStepValidator getDeleteStepValidator() {
+        return new DeleteStepValidator();
+    }
+
 }

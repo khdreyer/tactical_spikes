@@ -11,7 +11,7 @@ public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             LOG.info("Starting...");
             var context = new AnnotationConfigApplicationContext(AppConfig.class);

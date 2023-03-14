@@ -14,7 +14,7 @@ public class IdentityUserDeleteStep implements DeleteStep {
 
     @Override
     public DeleteStepType getType() {
-        return DeleteStepType.IDENTITY_USER_DELETE;
+        return DeleteStepType.IDENTITY_USER;
     }
 
     @Override

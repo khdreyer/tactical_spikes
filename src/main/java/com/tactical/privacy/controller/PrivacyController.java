@@ -41,20 +41,27 @@ public class PrivacyController {
 
     @PostMapping(value = "/add-request")
     public ResponseEntity addPrivacyRequest(@RequestBody PrivacyDeleteRequestDto requestDto) {
-        LOG.info(String.format("Received privacy request: %s", requestDto.toString()));
+        LOG.info(String.format("Received privacy delete add request: %s", requestDto.toString()));
         privacyRepository.writeDeleteRequest(requestDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping(value = "/process-request")
     public ResponseEntity processPrivacyRequest(@RequestBody PrivacyDeleteRequestDto requestDto) {
-
+        HttpStatus status = HttpStatus.OK;
+        LOG.info(String.format("Received privacy delete process request: %s", requestDto.toString()));
 //        DeleteStepType[] stepsToProcess = new DeleteStepType[]{
 //            DeleteStepType.SUBSCRIBER_EVENTS_DELETE
 //        };
 
-        DeleteOrchestratorRequest orchestratorRequest = requestEnricher.transform(requestDto);
-        deleteOrchestrator.process(orchestratorRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            DeleteOrchestratorRequest orchestratorRequest = requestEnricher.transform(requestDto);
+            deleteOrchestrator.process(orchestratorRequest);
+        } catch (Exception ex) {
+            LOG.error("An error occurred while processing a privacy delete request.", ex);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity(status);
     }
 }
