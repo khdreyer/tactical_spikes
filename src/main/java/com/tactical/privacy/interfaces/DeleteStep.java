@@ -5,4 +5,6 @@ import com.tactical.privacy.models.DeleteStepType;
 public interface DeleteStep {
     DeleteStepType getType();
     DeleteStepResponse process(DeleteStepRequest stepRequest);
+    DeleteStepResponse skip(DeleteStepRequest stepRequest);
+
 }

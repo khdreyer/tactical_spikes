@@ -2,8 +2,7 @@ package com.tactical.privacy;
 
 import com.tactical.privacy.config.AppConfig;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
-import com.tactical.privacy.interfaces.DeleteOrchestratorRequest;
-import com.tactical.privacy.interfaces.DeleteOrchestratorResponse;
+import com.tactical.privacy.services.DeleteRunner;
 import com.tactical.privacy.stats.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -15,17 +14,16 @@ public class Main {
         try {
             LOG.info("Starting...");
             var context = new AnnotationConfigApplicationContext(AppConfig.class);
-            DeleteOrchestrator orchestrator = context.getBean(DeleteOrchestrator.class);
+            DeleteRunner runner = context.getBean(DeleteRunner.class);
 
             PrivacyDeleteRequestDto endpointRequest = PrivacyDeleteRequestDto.builder()
+                .requestId(1)
                 .companyId(5)
                 .phone("555-555-5555")
                 .email("aawesome@gmail.com")
                 .build();
 
-            DeleteRequestTransformer enricher = context.getBean(DeleteRequestTransformer.class);
-            DeleteOrchestratorRequest orchestratorRequest = enricher.transform(endpointRequest);
-            DeleteOrchestratorResponse response = orchestrator.process(orchestratorRequest);
+            runner.run(endpointRequest);
 
             LOG.info("All done!");
 

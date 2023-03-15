@@ -35,4 +35,17 @@ public class ThirdPartyCustomerDeleteStep implements DeleteStep {
 
         return response;
     }
+
+    @Override
+    public DeleteStepResponse skip(DeleteStepRequest stepRequest) {
+        String stepName = this.getClass().getSimpleName();
+        LOG.info("Skipping step -> " + stepName);
+
+        return DeleteStepResponse.builder()
+            .stepType(getType())
+            .startedAt(LocalTime.now())
+            .endedAt(LocalTime.now())
+            .stepStatus(DeleteStepStatus.SKIPPED)
+            .build();
+    }
 }

@@ -12,6 +12,8 @@ public interface PrivacyDeleteRequestDto {
         return ImmutablePrivacyDeleteRequestDto.builder();
     }
 
+    int getRequestId();
+
     long getCompanyId();
 
     String getPhone();
@@ -24,6 +26,9 @@ public interface PrivacyDeleteRequestDto {
     }
 
     interface Builder {
+
+        Builder requestId(int requestId);
+
         Builder companyId(long companyId);
 
         Builder phone(String phone);

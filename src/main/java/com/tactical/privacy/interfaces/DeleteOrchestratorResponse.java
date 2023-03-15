@@ -10,6 +10,7 @@ public interface DeleteOrchestratorResponse {
     }
 
     long getCompanyId();
+
     LocalDateTime getStartedAt();
 
     LocalDateTime getEndedAt();
@@ -19,6 +20,7 @@ public interface DeleteOrchestratorResponse {
     interface Builder {
 
         Builder companyId(long companyId);
+
         Builder startedAt(LocalDateTime start);
 
         Builder endedAt(LocalDateTime end);

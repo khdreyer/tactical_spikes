@@ -6,10 +6,12 @@ import com.tactical.privacy.interfaces.DeleteOrchestratorResponse;
 import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.interfaces.DeleteStepRequest;
 import com.tactical.privacy.interfaces.DeleteStepResponse;
+import com.tactical.privacy.models.DeleteStepStatus;
 import com.tactical.privacy.models.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
 import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class DeleteOrchestrator {
         this.serializer = serializer;
     }
 
-    public DeleteOrchestratorResponse process(DeleteOrchestratorRequest request) throws Exception {
+    public DeleteOrchestratorResponse process(DeleteOrchestratorRequest request) {
         String processName = this.getClass().getSimpleName();
         LocalDateTime startedAt = LocalDateTime.now();
         List<DeleteStepResponse> deleteStepResponse = new ArrayList<>();
@@ -40,11 +42,15 @@ public class DeleteOrchestrator {
             DeleteStepRequest stepRequest = map(request);
 
             stepValidator.throwIfInvalid(deleteSteps, request.getStepFilter());
-            DeleteStep[] stepsToRun = getStepsToRun(deleteSteps, request.getStepFilter());
 
-            for (DeleteStep step : stepsToRun)
+            for (DeleteStep step : deleteSteps)
             {
-                DeleteStepResponse response = step.process(stepRequest);
+                DeleteStepResponse response;
+                if (shouldRun(request.getStepFilter(), step.getType())){
+                    response = step.process(stepRequest);
+                } else {
+                    response = step.skip(stepRequest);
+                }
                 deleteStepResponse.add(response);
             }
 
@@ -60,14 +66,25 @@ public class DeleteOrchestrator {
 
             return response;
         } catch (Exception ex) {
+            LOG.info(serializer.toPrettyString(request));
             LOG.error(processName + "failed!", ex);
             throw ex;
         }
     }
 
-    private DeleteStep[] getStepsToRun(DeleteStep[] injectedSteps, DeleteStepType[] filter) {
-        // todo: filter the steps
-        return injectedSteps;
+    private boolean shouldRun(DeleteStepType[] filter, DeleteStepType typeToRun) {
+        if (filter.length < 1) { // filter not set. Run all
+            return true;
+        }
+
+        var found = false;
+        for (DeleteStepType stepType : filter) {
+            if (typeToRun == stepType) {
+                found = true;
+                break;
+            }
+        }
+        return found;
     }
 
     private DeleteStepRequest map(DeleteOrchestratorRequest request) {

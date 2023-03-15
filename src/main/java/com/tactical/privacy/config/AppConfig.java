@@ -4,8 +4,10 @@ import com.tactical.privacy.DeleteOrchestrator;
 import com.tactical.privacy.DeleteRequestTransformer;
 import com.tactical.privacy.helpers.ObjectSerializer;
 import com.tactical.privacy.interfaces.DeleteStep;
+import com.tactical.privacy.reporting.DeleteReportBuilder;
 import com.tactical.privacy.repos.MockPrivacyRepository;
 import com.tactical.privacy.repos.PrivacyRepository;
+import com.tactical.privacy.services.DeleteRunner;
 import com.tactical.privacy.services.IdentityService;
 import com.tactical.privacy.steps.utils.DeleteStepConvertor;
 import com.tactical.privacy.steps.utils.DeleteStepValidator;
@@ -48,13 +50,32 @@ public class AppConfig {
         );
     }
 
+    @Bean
+    @Scope(value = "prototype")
+    public DeleteRunner getDeleteRunner() {
+        return new DeleteRunner(
+            getRequestTransformer(),
+            getDeleteOrchestrator(),
+            getReportBuilder(),
+            getPrivacyRepo()
+        );
+    }
+
+    @Bean
+    @Scope(value = "prototype")
+    public DeleteRequestTransformer getRequestTransformer(){
+        return new DeleteRequestTransformer(
+            getDeleteStepConverter(),
+            getIdentityService());
+    }
+
+
     public DeleteStep[] getOrchestratorSteps() {
         var steps = new ArrayList<DeleteStep>();
         steps.add(getSubscriberMainMySqlDeleteStep());
         steps.add(getThirdPartyCustomerDeleteStep());
         steps.add(getIdentityUserDeleteStep());
-        var stepsArray = steps.toArray(DeleteStep[]::new);
-        return stepsArray;
+        return steps.toArray(DeleteStep[]::new);
     }
 
     @Bean
@@ -78,13 +99,17 @@ public class AppConfig {
 
     @Bean
     @Scope(value = "prototype")
+    public DeleteReportBuilder getReportBuilder() { return new DeleteReportBuilder(); }
+
+    @Bean
+    @Scope(value = "prototype")
     public DeleteStepConvertor getDeleteStepConverter() {
         return new DeleteStepConvertor();
     }
 
     @Bean
     public PrivacyRepository getPrivacyRepo() {
-        return new MockPrivacyRepository();
+        return new MockPrivacyRepository(getSerializer());
     }
 
     @Bean

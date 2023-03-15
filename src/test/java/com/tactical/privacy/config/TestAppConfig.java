@@ -84,7 +84,7 @@ public class TestAppConfig {
 
     @Bean
     public PrivacyRepository getPrivacyRepo() {
-        return new MockPrivacyRepository();
+        return new MockPrivacyRepository(getSerializer());
     }
 
     @Bean

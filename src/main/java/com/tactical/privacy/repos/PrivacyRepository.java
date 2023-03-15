@@ -1,9 +1,9 @@
 package com.tactical.privacy.repos;
 
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
-import com.tactical.privacy.interfaces.DeleteOrchestratorResponse;
+import com.tactical.privacy.reporting.DeleteReport;
 
 public interface PrivacyRepository {
     void writeDeleteRequest(PrivacyDeleteRequestDto request);
-    void writeDeleteResult(DeleteOrchestratorResponse result);
+    void writeDeleteReport(DeleteReport report);
 }
