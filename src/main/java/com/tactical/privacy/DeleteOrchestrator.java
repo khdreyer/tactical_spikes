@@ -12,8 +12,6 @@ import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DeleteOrchestrator {
 
@@ -42,8 +40,9 @@ public class DeleteOrchestrator {
             DeleteStepRequest stepRequest = map(request);
 
             stepValidator.throwIfInvalid(deleteSteps, request.getStepFilter());
+            DeleteStep[] stepsToRun = getStepsToRun(deleteSteps, request.getStepFilter());
 
-            for (DeleteStep step : deleteSteps)
+            for (DeleteStep step : stepsToRun)
             {
                 DeleteStepResponse response = step.process(stepRequest);
                 deleteStepResponse.add(response);
@@ -66,19 +65,9 @@ public class DeleteOrchestrator {
         }
     }
 
-    private void validateSteps(List<DeleteStep> steps) throws Exception {
-        try {
-            // ensure that the list of step types are unique.
-            Set<DeleteStepType> set = steps.stream().map(DeleteStep::getType).collect(Collectors.toSet());
-            if (set.size() == steps.size()) {
-                LOG.info(set.size() +  " unique steps found to process.");
-            } else {
-                throw new Exception("Orchestration steps provided were not unique.");
-            }
-        } catch (Exception ex) {
-            LOG.error("Delete steps are not unique. More than one type exists in the collection.", ex);
-            throw ex;
-        }
+    private DeleteStep[] getStepsToRun(DeleteStep[] injectedSteps, DeleteStepType[] filter) {
+        // todo: filter the steps
+        return injectedSteps;
     }
 
     private DeleteStepRequest map(DeleteOrchestratorRequest request) {

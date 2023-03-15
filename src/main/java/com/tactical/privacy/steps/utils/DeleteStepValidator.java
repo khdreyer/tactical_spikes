@@ -13,18 +13,17 @@ public class DeleteStepValidator {
     private static final Logger LOG = Logger.getLogger(DeleteStepValidator.class);
 
     public void throwIfInvalid(
-        DeleteStep[] injectedSteps,
+        DeleteStep[] deleteSteps,
         DeleteStepType[] requestedStepTypes
-    ) throws Exception {
-
-        if (!stepsAreUnique(injectedSteps)) {
-            String msg = "Delete steps are not unique. More than one type exists in the collection.";
-            var ex = new Exception(msg);
+    ) {
+        if (!stepsAreUnique(deleteSteps)) {
+            String msg = "Delete steps are not unique. More than one implementation exists for a given type.";
+            var ex = new IllegalArgumentException(msg);
             LOG.error(msg, ex);
             throw ex;
         }
 
-        if ((requestedStepTypes.length) > 0 && (invalidStepNameFound(injectedSteps, requestedStepTypes))) {
+        if ((requestedStepTypes.length) > 0 && (invalidStepNameFound(deleteSteps, requestedStepTypes))) {
             String msg = "Unsupported step requested for processing.";
             var ex = new NotImplementedException(msg);
             LOG.error(msg, ex);
@@ -43,13 +42,13 @@ public class DeleteStepValidator {
         }
     }
 
-    private boolean invalidStepNameFound (DeleteStep[] injectedSteps, DeleteStepType[] requestedStepTypes) {
-        var injectedStepTypes = Stream.of(injectedSteps).map(DeleteStep::getType).collect(Collectors.toSet());
+    private boolean invalidStepNameFound (DeleteStep[] deleteSteps, DeleteStepType[] requestedStepTypes) {
+        var injectedStepTypes = Stream.of(deleteSteps).map(DeleteStep::getType).collect(Collectors.toSet());
 
         for (DeleteStepType requestedStepType : requestedStepTypes) {
             if (!injectedStepTypes.contains(requestedStepType)) {
-                String msg = "Unsupported step requested for processing. -> " + requestedStepType.toString();
-                LOG.warn(msg);
+                String msg = requestedStepType.toString() + " is not associated with any injected step";
+                LOG.info(msg);
                 return true;
             }
         }

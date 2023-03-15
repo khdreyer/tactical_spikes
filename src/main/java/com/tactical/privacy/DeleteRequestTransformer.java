@@ -3,6 +3,8 @@ package com.tactical.privacy;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.interfaces.DeleteOrchestratorRequest;
 import com.tactical.privacy.interfaces.UserIdentities;
+import com.tactical.privacy.services.IdentityService;
+import com.tactical.privacy.services.IdentityServiceRequest;
 import com.tactical.privacy.stats.Logger;
 import com.tactical.privacy.steps.utils.DeleteStepConvertor;
 
@@ -11,9 +13,13 @@ public class DeleteRequestTransformer {
     private static final Logger LOG = Logger.getLogger(DeleteRequestTransformer.class);
 
     DeleteStepConvertor stepConvertor;
+    IdentityService identityService;
 
-    public DeleteRequestTransformer(DeleteStepConvertor stepConvertor){
+    public DeleteRequestTransformer(
+        DeleteStepConvertor stepConvertor,
+        IdentityService identityService){
         this.stepConvertor = stepConvertor;
+        this.identityService = identityService;
     }
 
     public DeleteOrchestratorRequest transform(PrivacyDeleteRequestDto request) {
@@ -52,19 +58,19 @@ public class DeleteRequestTransformer {
         String phone,
         String email) {
 
-        // TODO: call identity and get the subscriber
-        //  and visitor ids to enrich the request for the orchestrator
+        var identityRequest = IdentityServiceRequest.builder()
+            .companyId(companyId)
+            .phone(phone)
+            .email(email)
+            .build();
 
-        // call a user identity service - separate class to be injected.
-
-        long fakeSubId = 12345667L;
-        String fakeVisitorId = "VSASDSIASSD_ASDS";
+        var identityResponse = identityService.fetch(identityRequest);
 
         UserIdentities userIdentities = UserIdentities.builder()
             .email(email)
             .phone(phone)
-            .visitorId(fakeVisitorId)
-            .subscriberId(fakeSubId)
+            .visitorId(identityResponse.getVisitorId())
+            .subscriberId(identityResponse.getSubscriberId())
             .build();
 
         return userIdentities;

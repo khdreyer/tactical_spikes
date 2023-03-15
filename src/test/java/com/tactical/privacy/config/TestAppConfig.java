@@ -7,18 +7,18 @@ import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.repos.MockPrivacyRepository;
 import com.tactical.privacy.repos.PrivacyRepository;
 import com.tactical.privacy.services.IdentityService;
-import com.tactical.privacy.steps.utils.DeleteStepConvertor;
-import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import com.tactical.privacy.steps.IdentityUserDeleteStep;
 import com.tactical.privacy.steps.SubscriberMainMySqlDeleteStep;
 import com.tactical.privacy.steps.ThirdPartyCustomerDeleteStep;
+import com.tactical.privacy.steps.utils.DeleteStepConvertor;
+import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.util.ArrayList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class AppConfig {
+public class TestAppConfig {
 
     @Bean
     @Scope(value = "prototype")
@@ -48,13 +48,13 @@ public class AppConfig {
         );
     }
 
+    @Bean
     public DeleteStep[] getOrchestratorSteps() {
         var steps = new ArrayList<DeleteStep>();
         steps.add(getSubscriberMainMySqlDeleteStep());
         steps.add(getThirdPartyCustomerDeleteStep());
         steps.add(getIdentityUserDeleteStep());
-        var stepsArray = steps.toArray(DeleteStep[]::new);
-        return stepsArray;
+        return steps.toArray(DeleteStep[]::new);
     }
 
     @Bean
