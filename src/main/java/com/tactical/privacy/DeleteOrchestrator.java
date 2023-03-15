@@ -6,12 +6,10 @@ import com.tactical.privacy.interfaces.DeleteOrchestratorResponse;
 import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.interfaces.DeleteStepRequest;
 import com.tactical.privacy.interfaces.DeleteStepResponse;
-import com.tactical.privacy.models.DeleteStepStatus;
 import com.tactical.privacy.models.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
 import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +39,13 @@ public class DeleteOrchestrator {
             LOG.info(processName + " started.");
             DeleteStepRequest stepRequest = map(request);
 
-            stepValidator.throwIfInvalid(deleteSteps, request.getStepFilter());
+            var filter = request.getStepFilter();
+            stepValidator.throwIfInvalid(deleteSteps, filter);
 
             for (DeleteStep step : deleteSteps)
             {
                 DeleteStepResponse response;
-                if (shouldRun(request.getStepFilter(), step.getType())){
+                if (shouldRunStep(filter, step.getType())){
                     response = step.process(stepRequest);
                 } else {
                     response = step.skip(stepRequest);
@@ -72,7 +71,7 @@ public class DeleteOrchestrator {
         }
     }
 
-    private boolean shouldRun(DeleteStepType[] filter, DeleteStepType typeToRun) {
+    private boolean shouldRunStep(DeleteStepType[] filter, DeleteStepType typeToRun) {
         if (filter.length < 1) { // filter not set. Run all
             return true;
         }

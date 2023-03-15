@@ -28,7 +28,7 @@ public class DeleteRunner {
         this.privacyRepository = privacyRepository;
     }
 
-    public void run(PrivacyDeleteRequestDto requestDto) throws Exception {
+    public void run(PrivacyDeleteRequestDto requestDto) {
         try {
             DeleteOrchestratorRequest orchestratorRequest = requestTransformer.transform(requestDto);
             var response = deleteOrchestrator.process(orchestratorRequest);

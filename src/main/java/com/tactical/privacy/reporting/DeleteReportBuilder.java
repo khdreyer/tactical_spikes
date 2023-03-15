@@ -33,7 +33,7 @@ public class DeleteReportBuilder {
     }
 
     private String formatDateTime(LocalDateTime dt) {
-        String DATE_TIME_FORMAT = "MM-dd-yyyy hh:mm:ss:SSS";
+        String DATE_TIME_FORMAT = "MM-dd-yyyy hh:mm:ss";
         var dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
         return dtf.format(dt);
     }
