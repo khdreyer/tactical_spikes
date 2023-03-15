@@ -1,6 +1,6 @@
 package com.tactical.privacy.steps.utils;
 
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
 import java.util.ArrayList;
 

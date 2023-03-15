@@ -4,16 +4,18 @@ import com.tactical.privacy.config.AppConfig;
 import com.tactical.privacy.controller.dto.PrivacyDeleteRequestDto;
 import com.tactical.privacy.services.DeleteRunner;
 import com.tactical.privacy.stats.Logger;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
             LOG.info("Starting...");
-            var context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+            var appConfig = new AppConfig();
+            var context = appConfig.getApplicationContext();
+
             DeleteRunner runner = context.getBean(DeleteRunner.class);
 
             PrivacyDeleteRequestDto endpointRequest = PrivacyDeleteRequestDto.builder()

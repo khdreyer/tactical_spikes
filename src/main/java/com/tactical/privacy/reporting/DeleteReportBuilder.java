@@ -48,6 +48,7 @@ public class DeleteReportBuilder {
                 .name(stepResponse.getStepType().toString())
                 .status(stepResponse.getStepStatus().toString())
                 .durationMs(durationMs)
+                .messages(stepResponse.getMessages())
                 .build();
             reportSteps.add(stepReport);
         }

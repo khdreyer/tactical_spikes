@@ -1,7 +1,7 @@
 package com.tactical.privacy.interfaces;
 
-import com.tactical.privacy.models.DeleteStepStatus;
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepStatus;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import java.time.LocalTime;
 import org.immutables.value.Value;
 

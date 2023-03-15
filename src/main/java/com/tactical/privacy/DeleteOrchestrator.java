@@ -6,7 +6,7 @@ import com.tactical.privacy.interfaces.DeleteOrchestratorResponse;
 import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.interfaces.DeleteStepRequest;
 import com.tactical.privacy.interfaces.DeleteStepResponse;
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
 import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.time.LocalDateTime;

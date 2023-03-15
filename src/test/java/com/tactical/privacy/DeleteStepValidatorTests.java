@@ -2,10 +2,10 @@ package com.tactical.privacy;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.tactical.privacy.config.DeleteStepConfig;
 import com.tactical.privacy.config.TestAppConfig;
 import com.tactical.privacy.interfaces.DeleteStep;
-import com.tactical.privacy.models.DeleteStepType;
-import com.tactical.privacy.steps.SubscriberMainMySqlDeleteStep;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import com.tactical.privacy.steps.utils.DeleteStepValidator;
 import java.util.ArrayList;
 import org.apache.commons.lang3.NotImplementedException;
@@ -19,7 +19,7 @@ public class DeleteStepValidatorTests {
     DeleteStepValidator validator;
 
     public DeleteStepValidatorTests(){
-        appContext = new AnnotationConfigApplicationContext(TestAppConfig.class);
+        appContext = new TestAppConfig().getApplicationContext();
         validator = appContext.getBean(DeleteStepValidator.class);
         injectedSteps = appContext.getBean(DeleteStep[].class);
     }
@@ -35,9 +35,10 @@ public class DeleteStepValidatorTests {
         assertThrows(
             IllegalArgumentException.class,
             () -> {
+                var deleteStepConfig = new DeleteStepConfig();
                 var steps = new ArrayList<DeleteStep>();
-                steps.add(appContext.getBean(SubscriberMainMySqlDeleteStep.class));
-                steps.add(appContext.getBean(SubscriberMainMySqlDeleteStep.class));
+                steps.add(deleteStepConfig.getSubscriberMainMySqlDeleteStep());
+                steps.add(deleteStepConfig.getSubscriberMainMySqlDeleteStep());
                 var injectedStepsOverride = steps.toArray(DeleteStep[]::new);
                 var stepTypes = new DeleteStepType[] { DeleteStepType.CARRIER_INFO, DeleteStepType.CARRIER_INFO };
                 validator.throwIfInvalid(injectedStepsOverride, stepTypes);

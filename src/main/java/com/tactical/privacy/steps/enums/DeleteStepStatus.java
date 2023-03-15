@@ -1,4 +1,4 @@
-package com.tactical.privacy.models;
+package com.tactical.privacy.steps.enums;
 
 public enum DeleteStepStatus {
     SUCCESS,

@@ -1,6 +1,6 @@
 package com.tactical.privacy.interfaces;
 
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 
 public interface DeleteStep {
     DeleteStepType getType();

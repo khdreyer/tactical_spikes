@@ -1,6 +1,6 @@
 package com.tactical.privacy.interfaces;
 
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import org.immutables.value.Value;
 
 @Value.Immutable

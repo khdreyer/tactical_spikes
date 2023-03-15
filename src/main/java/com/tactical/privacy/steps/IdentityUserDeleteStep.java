@@ -3,14 +3,24 @@ package com.tactical.privacy.steps;
 import com.tactical.privacy.interfaces.DeleteStep;
 import com.tactical.privacy.interfaces.DeleteStepRequest;
 import com.tactical.privacy.interfaces.DeleteStepResponse;
-import com.tactical.privacy.models.DeleteStepStatus;
-import com.tactical.privacy.models.DeleteStepType;
+import com.tactical.privacy.steps.enums.DeleteStepStatus;
+import com.tactical.privacy.steps.enums.DeleteStepType;
 import com.tactical.privacy.stats.Logger;
+import com.tactical.privacy.stats.StepMessages;
+import com.tactical.privacy.steps.utils.DeleteStepCommonResponseBuilder;
 import java.time.LocalTime;
 
 public class IdentityUserDeleteStep implements DeleteStep {
 
     private static final Logger LOG = Logger.getLogger(IdentityUserDeleteStep.class);
+
+    private final DeleteStepCommonResponseBuilder commonResponseBuilder;
+
+    public IdentityUserDeleteStep(
+        DeleteStepCommonResponseBuilder commonResponseBuilder)
+    {
+        this.commonResponseBuilder = commonResponseBuilder;
+    }
 
     @Override
     public DeleteStepType getType() {
@@ -22,7 +32,9 @@ public class IdentityUserDeleteStep implements DeleteStep {
         LocalTime startedAt = LocalTime.now();
         String stepName = this.getClass().getSimpleName();
 
-        LOG.info("Processing started for  -> " + stepName);
+        LOG.info(String.format(StepMessages.STEP_STARTED, stepName));
+
+        // TODO: call service. Do not throw. Just capture the exception and mark it as failed.
 
         DeleteStepResponse response = DeleteStepResponse.builder()
             .stepType(getType())
@@ -31,21 +43,13 @@ public class IdentityUserDeleteStep implements DeleteStep {
             .stepStatus(DeleteStepStatus.SUCCESS)
             .build();
 
-        LOG.info("Processing ended for  -> " + stepName);
+        LOG.info(String.format(StepMessages.STEP_ENDED, stepName));
 
         return response;
     }
 
     @Override
     public DeleteStepResponse skip(DeleteStepRequest stepRequest) {
-        String stepName = this.getClass().getSimpleName();
-        LOG.info("Skipping step -> " + stepName);
-
-        return DeleteStepResponse.builder()
-            .stepType(getType())
-            .startedAt(LocalTime.now())
-            .endedAt(LocalTime.now())
-            .stepStatus(DeleteStepStatus.SKIPPED)
-            .build();
+        return commonResponseBuilder.getSkippedResponse(getType());
     }
 }

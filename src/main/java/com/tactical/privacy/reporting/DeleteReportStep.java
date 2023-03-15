@@ -14,6 +14,9 @@ public interface DeleteReportStep {
 
     long getDurationMs();
 
+    @Value.Default
+    default String[] getMessages() { return new String[]{}; };
+
     interface Builder {
 
         Builder name(String name);
@@ -21,6 +24,8 @@ public interface DeleteReportStep {
         Builder status(String status);
 
         Builder durationMs(long durationMs);
+
+        Builder messages(String[] messages);
 
         DeleteReportStep build();
     }
