@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 public class DeleteReportBuilder {
 
-    private static final Logger LOG = Logger.getLogger(DeleteReport.class);
+    private static final Logger LOG = Logger.getLogger(DeleteReportBuilder.class);
 
     public DeleteReport map(int requestId, DeleteOrchestratorResponse response) {
         try {
             String start = formatDateTime(response.getStartedAt());
             String end = formatDateTime(response.getEndedAt());
             long durationMS = Duration.between(response.getStartedAt(), response.getEndedAt()).toMillis();
-            DeleteReportStep[] steps = map(response.getStepResults());
+            DeleteReportStep[] steps = mapStepResults(response.getStepResults());
 
             return DeleteReport.builder()
                 .requestId(requestId)
@@ -33,12 +33,12 @@ public class DeleteReportBuilder {
     }
 
     private String formatDateTime(LocalDateTime dt) {
-        String DATE_TIME_FORMAT = "MM-dd-yyyy hh:mm:ss";
-        var dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
+        String dateTimeFormat = "MM-dd-yyyy hh:mm:ss";
+        var dtf = DateTimeFormatter.ofPattern(dateTimeFormat);
         return dtf.format(dt);
     }
 
-    private DeleteReportStep[] map(DeleteStepResponse[] stepResponses) {
+    private DeleteReportStep[] mapStepResults(DeleteStepResponse[] stepResponses) {
         var reportSteps = new ArrayList<DeleteReportStep>();
 
         for (DeleteStepResponse stepResponse : stepResponses) {
